@@ -1,9 +1,9 @@
 import { MockMethod } from 'vite-plugin-mock'
 const users = [
-  { name: 'admin', password: '123456', token: 'admin', info: {
+  { name: 'admin', password: 'e10adc3949ba59abbe56e057f20f883e', token: 'admin', info: {
     name: '系统管理员', role: 'admin'
   }},
-  { name: 'editor', password: '123456', token: 'editor', info: {
+  { name: 'editor', password: 'e10adc3949ba59abbe56e057f20f883e', token: 'editor', info: {
     name: '编辑人员' , role: 'user'
   }}
 ]

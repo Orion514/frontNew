@@ -3,11 +3,16 @@ import { ActionContext } from 'vuex'
 
 export interface userState {
   token: string,
-  info: object
+  info: object,
+  groupid: any,
+  sceneid: any,
+
 }
 const state = (): userState => ({
   token: '', // 登录token
   info: {},  // 用户信息
+  groupid: 0, // 上传数据组id
+  sceneid: 1, // 场景id
 })
 
 // getters
@@ -17,6 +22,12 @@ const getters = {
   },
   info(state: userState) {
     return state.info
+  },
+  groupid(state: userState) {
+    return state.groupid
+  },
+  sceneid(state: userState) {
+    return state.sceneid
   }
 }
 
@@ -27,7 +38,13 @@ const mutations = {
   },
   infoChange(state: userState, info: object) {
     state.info = info
-  }
+  },
+  groupidChange(state: userState, groupid: bigint) {
+    state.groupid = groupid
+  },
+  sceneidChange(state: userState, sceneid: bigint) {
+    state.sceneid = sceneid
+  },
 }
 
 // actions
@@ -38,6 +55,9 @@ const actions = {
       loginApi(params)
       .then(res => {
         commit('tokenChange', res.data.token)
+        commit('groupidChange', 0)
+        commit('sceneidChange', 1)
+        console.log(33333)
         dispatch('getInfo', { token: res.data.token })
         .then(infoRes => {
           resolve(res.data.token)

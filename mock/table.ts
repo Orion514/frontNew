@@ -6,20 +6,38 @@ export default [
     url: `/mock/table/list`,
     method: 'post',
     response: ({ body }: { body: any }) => {
-      const { page, pageSize } = body
+      const {page, pageSize} = body
+      // return {
+      //   code: 200,
+      //   data: {
+      //     [`list|${pageSize}`]: [{
+      //       'id|+1': 0,
+      //       'name1': '@name',
+      //       'name2': '@name',
+      //       'name3': '@name',
+      //       'name4': '@name',
+      //       'weight4': Mock.Random.boolean() ? Mock.Random.float(1, 1000, 0, 2) : Mock.Random.natural(1, 1000),
+      //       'weight3': Mock.Random.boolean() ? Mock.Random.float(1, 1000, 0, 2) : Mock.Random.natural(1, 1000),
+      //       'weight2': Mock.Random.boolean() ? Mock.Random.float(1, 1000, 0, 2) : Mock.Random.natural(1, 1000),
+      //       'weight1': Mock.Random.boolean() ? Mock.Random.float(1, 1000, 0, 2) : Mock.Random.natural(1, 1000)
+      //     }],
+      //     pager: {
+      //       page: page,
+      //       pageSize: pageSize,
+      //       total: 198
+      //     }
+      //   },
+      //   msg: ''
+      // };
+
       return {
         code: 200,
         data: {
           [`list|${pageSize}`]: [{
             'id|+1': 0,
-            'name1': '@name',
-            'name2': '@name',
-            'name3': '@name',
-            'name4': '@name',
-            'weight4': Mock.Random.boolean() ? Mock.Random.float(1, 1000, 0, 2) : Mock.Random.natural(1, 1000),
-            'weight3': Mock.Random.boolean() ? Mock.Random.float(1, 1000, 0, 2) : Mock.Random.natural(1, 1000),
-            'weight2': Mock.Random.boolean() ? Mock.Random.float(1, 1000, 0, 2) : Mock.Random.natural(1, 1000),
-            'weight1': Mock.Random.boolean() ? Mock.Random.float(1, 1000, 0, 2) : Mock.Random.natural(1, 1000)
+            'name': '@name',
+            'weight': Mock.Random.boolean() ? Mock.Random.float(1, 1000, 0, 2) : Mock.Random.natural(1, 1000),
+            'value': Mock.Random.boolean() ? Mock.Random.float(1, 1000, 0, 2) : Mock.Random.natural(1, 1000)
           }],
           pager: {
             page: page,
@@ -29,6 +47,7 @@ export default [
         },
         msg: ''
       };
+
     }
   },
   {
@@ -60,49 +79,29 @@ export default [
       return {
         code: 200,
         data: [{
-          label: '人事部',
-          id: 1,
-          'children|5': [{
+          label: '数据1',
+          dataid: 100,
+          indexid:1,
+          'children|2': [{
             label: '@cname',
-            'id|+1': 10
+            'indexid|+1': 10,
+            dataid: 1,
           }]
         }, {
-          label: '研发部',
-          id: 2,
+          label: '数据2',
+          dataid: 101,
+          indexid:2,
           children: [{
-            label: '前端',
-            id: 3,
-            'children|5': [{
-              label: '@cname',
-              'id|+1': 20
-            }]
+            label: '@cname',
+            dataid: 101,
+            indexid: 3,
           }, {
             label: '后端',
-            id: 4,
-            'children|5': [{
-              label: '@cname',
-              'id|+1': 30
-            }]
+            dataid: 101,
+            indexid: 4,
           }]
-        }, {
-          label: '运营部',
-          id: 5,
-          children: [{
-            label: '市场运营',
-            id: 6,
-            'children|5': [{
-              label: '@cname',
-              'id|+1': 40
-            }]
-          }, {
-            label: '互联网营销',
-            id: 7,
-            'children|5': [{
-              label: '@cname',
-              'id|+1': 50
-            }]
-          }]
-        }],
+        }
+        ],
         msg: ''
       };
     }

@@ -36,22 +36,24 @@ export default defineComponent({
       children: "children",
       label: "label",
     };
-    const active: any = inject("active");
+    const activeCategory: any = inject('active')
     const getTreeData = () => {
       let params = {};
       getTree(params).then((res) => {
         data.value = res.data;
-        active.value = res.data[0];
+        activeCategory.value = res.data[0];
         nextTick(() => {
-          tree.value && tree.value.setCurrentKey(active.value.id)
+          // 将dataid和indexid拼接成key，用于设置当前选中的节点
+          const key = `${activeCategory.value.dataid}_${activeCategory.value.indexid}`
+          tree.value && tree.value.setCurrentKey(key)
         })
       });
     };
     const handleNodeClick = (row: any) => {
-      active.value = row;
+      activeCategory.value = row;
     };
     getTreeData();
-    
+
     return {
       data,
       tree,
