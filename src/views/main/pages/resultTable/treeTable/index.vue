@@ -1,10 +1,13 @@
 <template>
   <div class="full">
+    <el-card shadow="always">
     <div class="left">
-      <category />
+        <category />
     </div>
+    </el-card>
+
     <div class="content">
-      <my-table />
+        <my-table />
     </div>
   </div>
 </template>

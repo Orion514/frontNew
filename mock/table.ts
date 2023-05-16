@@ -79,26 +79,30 @@ export default [
       return {
         code: 200,
         data: [{
-          label: '数据1',
+          label: '数据1(health_level)',
           dataid: 100,
           indexid:1,
-          'children|2': [{
-            label: '@cname',
-            'indexid|+1': 10,
-            dataid: 1,
+          children: [{
+            label: 'pm_health',
+            dataid: 101,
+            indexid: 23,
+          }, {
+            label: 'liv_abha',
+            dataid: 101,
+            indexid: 24,
           }]
         }, {
-          label: '数据2',
+          label: '数据2(health_level)',
           dataid: 101,
           indexid:2,
           children: [{
-            label: '@cname',
+            label: 'pm_health',
             dataid: 101,
-            indexid: 3,
+            indexid: 23,
           }, {
-            label: '后端',
+            label: 'liv_abha',
             dataid: 101,
-            indexid: 4,
+            indexid: 24,
           }]
         }
         ],

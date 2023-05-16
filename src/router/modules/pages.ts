@@ -21,7 +21,7 @@ const route: Route[] = [
       },
       {
         path: 'treeTable',
-        component: createNameComponent(() => import('@/views/main/pages/treeTable/index.vue')),
+        component: createNameComponent(() => import('@/views/main/pages/resultTable/index.vue')),
         meta: { title: 'message.menu.page.treeTable', cache: true }
       },
       {

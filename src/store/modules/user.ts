@@ -1,13 +1,24 @@
 import { loginApi, getInfoApi, loginOutApi } from '@/api/user'
 import { ActionContext } from 'vuex'
 
+
+export interface UserInfo {
+  id: number,
+  name: string,
+  role: string,
+  token: string,
+}
+
 export interface userState {
   token: string,
   info: object,
-  groupid: any,
-  sceneid: any,
+  groupid: number,
+  sceneid: number,
 
 }
+
+
+
 const state = (): userState => ({
   token: '', // 登录token
   info: {},  // 用户信息
@@ -57,7 +68,6 @@ const actions = {
         commit('tokenChange', res.data.token)
         commit('groupidChange', 0)
         commit('sceneidChange', 1)
-        console.log(33333)
         dispatch('getInfo', { token: res.data.token })
         .then(infoRes => {
           resolve(res.data.token)
@@ -73,7 +83,7 @@ const actions = {
       getInfoApi(params)
       .then(res => {
         commit('infoChange', res.data)
-        resolve(res.data.info)
+        resolve(res.data)
       })
     })
   },

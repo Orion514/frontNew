@@ -1,11 +1,11 @@
 import { MockMethod } from 'vite-plugin-mock'
 const users = [
-  { name: 'admin', password: 'e10adc3949ba59abbe56e057f20f883e', token: 'admin', info: {
-    name: '系统管理员', role: 'admin'
-  }},
-  { name: 'editor', password: 'e10adc3949ba59abbe56e057f20f883e', token: 'editor', info: {
-    name: '编辑人员' , role: 'user'
-  }}
+  { name: 'admin', password: 'e10adc3949ba59abbe56e057f20f883e', token: 'admin',
+    role: 'admin' , id: 1
+  },
+  { name: 'editor', password: 'e10adc3949ba59abbe56e057f20f883e', token: 'editor',
+    role: 'user', id: 2
+  }
 ]
 // @ts-ignore
 export default [

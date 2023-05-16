@@ -1,19 +1,19 @@
 <template>
   <div class="layout-container">
-    <div class="layout-container-form flex space-between">
-      <div class="layout-container-form-handle">
-<!--        <el-button type="primary" :icon="Plus" @click="handleAdd">{{ $t('message.common.add') }}</el-button>-->
-<!--        <el-popconfirm :title="$t('message.common.delTip')" @confirm="handleDel(chooseData)">-->
-<!--          <template #reference>-->
-<!--            <el-button type="danger" :icon="Delete" :disabled="chooseData.length === 0">{{ $t('message.common.delBat') }}</el-button>-->
-<!--          </template>-->
-<!--        </el-popconfirm>-->
-      </div>
-      <div class="layout-container-form-search">
-<!--        <el-input v-model="query.input" :placeholder="$t('message.common.searchTip')" @change="getTableData(true)"></el-input>-->
-<!--        <el-button type="primary" :icon="Search" class="search-btn" @click="getTableData(true)">{{ $t('message.common.search') }}</el-button>-->
-      </div>
-    </div>
+<!--    <div class="layout-container-form flex space-between">-->
+<!--      <div class="layout-container-form-handle">-->
+<!--&lt;!&ndash;        <el-button type="primary" :icon="Plus" @click="handleAdd">{{ $t('message.common.add') }}</el-button>&ndash;&gt;-->
+<!--&lt;!&ndash;        <el-popconfirm :title="$t('message.common.delTip')" @confirm="handleDel(chooseData)">&ndash;&gt;-->
+<!--&lt;!&ndash;          <template #reference>&ndash;&gt;-->
+<!--&lt;!&ndash;            <el-button type="danger" :icon="Delete" :disabled="chooseData.length === 0">{{ $t('message.common.delBat') }}</el-button>&ndash;&gt;-->
+<!--&lt;!&ndash;          </template>&ndash;&gt;-->
+<!--&lt;!&ndash;        </el-popconfirm>&ndash;&gt;-->
+<!--      </div>-->
+<!--      <div class="layout-container-form-search">-->
+<!--&lt;!&ndash;        <el-input v-model="query.input" :placeholder="$t('message.common.searchTip')" @change="getTableData(true)"></el-input>&ndash;&gt;-->
+<!--&lt;!&ndash;        <el-button type="primary" :icon="Search" class="search-btn" @click="getTableData(true)">{{ $t('message.common.search') }}</el-button>&ndash;&gt;-->
+<!--      </div>-->
+<!--    </div>-->
     <div class="layout-container-table">
       <Table
         ref="table"
@@ -49,9 +49,10 @@
 import {defineComponent, ref, reactive, inject, watch, computed} from 'vue'
 import Table from '@/components/table/index.vue'
 import { Page } from '@/components/table/type'
-import { getData, del } from '@/api/table'
+
+import {getData} from '@/api/result'
 import {useStore} from 'vuex'
-// import Layer from './layer.vue'
+
 import { ElMessage } from 'element-plus'
 import type { LayerInterface } from '@/components/layer/index.vue'
 import { selectData, radioData } from './enum'
@@ -60,19 +61,10 @@ import store from 'element-plus/es/components/table/src/store'
 export default defineComponent({
   components: {
     Table,
-    // Layer
+
   },
   setup() {
-    // // 存储搜索用的数据
-    // const query = reactive({
-    //   input: ''
-    // })
-    // // 弹窗控制器
-    // const layer: LayerInterface = reactive({
-    //   show: false,
-    //   title: '新增',
-    //   showButton: true
-    // })
+
     // 分页参数, 供table使用
     const page: Page = reactive({
       index: 1,
@@ -84,10 +76,6 @@ export default defineComponent({
     const tableData = ref([])
     const store = useStore()
 
-    // const chooseData = ref([])
-    // const handleSelectionChange = (val: []) => {
-    //   chooseData.value = val
-    // }
     // 获取表格数据
     // params <init> Boolean ，默认为false，用于判断是否需要初始化分页
     const getTableData = (init: boolean) => {
@@ -96,13 +84,13 @@ export default defineComponent({
         page.index = 1
       }
       let params = {
-        dataid: activeCategory.value.dataid,
-        indexid: activeCategory.value.indexid,
+        dataid: activeCategory.value.dataId,
+        indexid: activeCategory.value.indexId,
         sceneid: store.state.user.sceneid,
         page: page.index,
         pageSize: page.size,
-        // ...query
       }
+      console.log(params)
       getData(params)
       .then(res => {
         let data = res.data.list
@@ -115,7 +103,8 @@ export default defineComponent({
           })
         }
         tableData.value = res.data.list
-        page.total = Number(res.data.pager.total)
+        console.log(tableData.value)
+        page.total = Number(res.data.page.total)
       })
       .catch(error => {
         tableData.value = []
@@ -126,52 +115,14 @@ export default defineComponent({
         loading.value = false
       })
     }
-    // // 删除功能
-    // const handleDel = (data: object[]) => {
-    //   let params = {
-    //     ids: data.map((e:any)=> {
-    //       return e.id
-    //     }).join(',')
-    //   }
-    //   del(params)
-    //   .then(res => {
-    //     ElMessage({
-    //       type: 'success',
-    //       message: '删除成功'
-    //     })
-    //     getTableData(tableData.value.length === 1 ? true : false)
-    //   })
-    // }
-    // // 新增弹窗功能
-    // const handleAdd = () => {
-    //   layer.title = '新增数据'
-    //   layer.show = true
-    //   delete layer.row
-    // }
-    // // 编辑弹窗功能
-    // const handleEdit = (row: object) => {
-    //   layer.title = '编辑数据'
-    //   layer.row = row
-    //   layer.show = true
-    // }
     watch(activeCategory, (newVal) => {
       getTableData(true)
     })
-    // getTableData(true)
+
     return {
-      // Plus,
-      // Search,
-      // Delete,
-      // query,
       tableData,
-      // chooseData,
       loading,
       page,
-      // layer,
-      // handleSelectionChange,
-      // handleAdd,
-      // handleEdit,
-      // handleDel,
       getTableData
     }
   }

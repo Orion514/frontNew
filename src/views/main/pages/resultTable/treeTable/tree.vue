@@ -1,7 +1,7 @@
 <template>
   <div class="category">
     <div class="header-box">
-      <h2>组织管理</h2>
+      <h2>结果树结构</h2>
       <!-- <el-input
         v-model="input"
         placeholder="请输入内容"
@@ -19,7 +19,8 @@
         highlight-current
         default-expand-all
         @node-click="handleNodeClick"
-      ></el-tree>
+      >
+      </el-tree>
     </div>
   </div>
 </template>
@@ -27,7 +28,10 @@
 <script lang="ts">
 import type { Ref } from "vue";
 import { defineComponent, ref, inject, nextTick } from "vue";
-import { getTree } from "@/api/table";
+import { getTree } from "@/api/result";
+import { useStore } from "vuex";
+import { ElMessage } from "element-plus";
+
 export default defineComponent({
   setup() {
     let data = ref([]);
@@ -35,12 +39,33 @@ export default defineComponent({
     const defaultProps = {
       children: "children",
       label: "label",
+      dataId: "dataId",
+      indexId: "indexId"
     };
     const activeCategory: any = inject('active')
+
+    const store = useStore();
+
     const getTreeData = () => {
-      let params = {};
+      //todo, 数据是定死的
+      // const params = {
+      //   groupid: 100,
+      //   sceneid: 1
+      // }
+
+      const params = {
+        groupid: store.state.user.groupid,
+        sceneid: store.state.user.sceneid
+      };
+
       getTree(params).then((res) => {
-        data.value = res.data;
+        data.value = res.data.map((node) => {
+          return {
+            ...node,
+            dataId: node.dataId,
+            indexId: node.indexId,
+          };
+        });
         activeCategory.value = res.data[0];
         nextTick(() => {
           // 将dataid和indexid拼接成key，用于设置当前选中的节点
@@ -52,13 +77,19 @@ export default defineComponent({
     const handleNodeClick = (row: any) => {
       activeCategory.value = row;
     };
-    getTreeData();
+    if(store.state.user.groupid === 0){
+      ElMessage.error("请先上传数据并启用");
+    }else{
+      getTreeData();
+    }
+    // getTreeData();
+
 
     return {
       data,
       tree,
       defaultProps,
-      handleNodeClick
+      handleNodeClick,
     };
   },
 });

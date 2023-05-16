@@ -3,15 +3,15 @@ import Layout from '@/layout/index.vue'
 import { createNameComponent } from '../createNode'
 const route: Route[] = [
     {
-        path: '/',
+        path: '/dataConfig',
         component: Layout,
-        redirect: '/dataConfig',
-        meta: { title: 'message.menu.dataConfig.name', icon: 'sfont system-home' },
+        redirect: '/dataConfig/downAndUpload',
+        meta: { title: '数据配置', icon: 'sfont system-home' },
         children: [
             {
-                path: 'dataConfig',
-                component: createNameComponent(() => import('@/views/main/dashboard/index.vue')),
-                meta: { title: 'message.menu.dashboard.index', icon: 'sfont system-home', hideClose: true }
+                path: 'downAndUpload',
+                component: createNameComponent(() => import('@/views/main/dataConfig/downAndUpload/index.vue')),
+                meta: { title: '数据配置管理', icon: 'sfont system-home', hideClose: true }
             }
         ]
     }

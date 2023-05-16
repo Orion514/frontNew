@@ -30,6 +30,7 @@ const document = {
   api: createNameComponent(() => import('@/views/main/document/api.vue')),
 }
 
+
 /** 组件 */
 const component = {
   /** 按钮 */
@@ -54,6 +55,11 @@ const component = {
   exportExcel: createNameComponent(() => import('@/views/main/components/exportExcel/index.vue')),
 }
 
+const dataConfig = {
+    /** 下载上传 */
+    downAndUpload: createNameComponent(() => import('@/views/main/dataConfig/downAndUpload/index.vue')),
+}
+
 /** 页面 */
 const pages = {
   /** 业务表格 */
@@ -61,7 +67,7 @@ const pages = {
   /** 分类表格 */
   categoryTable: createNameComponent(() => import('@/views/main/pages/categoryTable/index.vue')),
   /** 树形表格 */
-  treeTable: createNameComponent(() => import('@/views/main/pages/treeTable/index.vue')),
+  treeTable: createNameComponent(() => import('@/views/main/pages/resultTable/treeTable/index.vue')),
   /** 卡片 */
   card: createNameComponent(() => import('@/views/main/pages/card/index.vue')),
   /** 工作台 */
@@ -165,6 +171,7 @@ const allRoutes = {
   dashboard,
   document,
   component,
+  dataConfig,
   pages,
   menu,
   directive,

@@ -35,6 +35,7 @@ const getComponents = (data: any[], level = 1) => {
       }
     } else {
       const [first, end] =  item.component.split('_')
+      // @ts-ignore
       const component = backConfig[first][end]
       return {
         ...item,
