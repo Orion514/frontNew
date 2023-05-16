@@ -5,7 +5,7 @@ const route = [
         path: '/user',
         component: Layout,
         redirect: '/user/userManager',
-        meta: { title: '用户管理', icon: 'el-icon-document-copy' , roles: ['admin'] },
+        meta: { title: '用户管理', icon: 'sfont system-24gl-printer' , roles: ['admin'] },
         children: [
             {
                 path: 'userManager',

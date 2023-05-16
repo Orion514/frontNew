@@ -48,15 +48,15 @@ export default defineComponent({
 
     const getTreeData = () => {
       //todo, 数据是定死的
-      // const params = {
-      //   groupid: 100,
-      //   sceneid: 1
-      // }
-
       const params = {
-        groupid: store.state.user.groupid,
-        sceneid: store.state.user.sceneid
-      };
+        groupid: 100,
+        sceneid: 1
+      }
+
+      // const params = {
+      //   groupid: store.state.user.groupid,
+      //   sceneid: store.state.user.sceneid
+      // };
 
       getTree(params).then((res) => {
         data.value = res.data.map((node) => {
@@ -80,9 +80,9 @@ export default defineComponent({
     if(store.state.user.groupid === 0){
       ElMessage.error("请先上传数据并启用");
     }else{
-      getTreeData();
+      // getTreeData();
     }
-    // getTreeData();
+    getTreeData();
 
 
     return {

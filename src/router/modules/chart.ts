@@ -6,7 +6,7 @@ const route: Route[] = [
     path: '/echarts',
     component: Layout,
     redirect: '/echarts/dragable',
-    meta: { title: 'message.menu.echarts.name', icon: 'sfont system-chart' },
+    meta: { title: 'message.menu.echarts.name', icon: 'sfont system-chart', roles: ['admin', 'user'] },
     children: [
       {
         path: 'bar',

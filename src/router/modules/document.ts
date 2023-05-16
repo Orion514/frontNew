@@ -6,7 +6,7 @@ const route: Route[] = [
     path: '/document',
     component: Layout,
     redirect: '/document/intro',
-    meta: { title: 'message.menu.document.name', icon: 'sfont system-document' },
+    meta: { title: 'message.menu.document.name', icon: 'sfont system-document' , roles: ['admin', 'user']},
     children: [
       {
         path: 'intro',

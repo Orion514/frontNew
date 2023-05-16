@@ -1,6 +1,6 @@
 /*
  * @Date: 2022-07-24 21:43:47
- * @Description: 
+ * @Description:
  */
 /** 引入类型 */
 
@@ -16,7 +16,7 @@ import FrontRoutes from './permission/front'
 /** 引入后端路由 */
 import getMenu from './permission/back'
 
-/** 
+/**
  * @name 动态路由的权限新增，供登录后调用
  * @other 如果需要进行后端接口控制菜单的话，请在此拿到后端的菜单树与asyncRoutes对比，生成一个新的值
  */
@@ -35,8 +35,14 @@ async function addRoutes() {
         resolve()
       })
       return
-    }    
+    }
     FrontRoutes.forEach(item => {
+      // console.log(item)
+      // console.log(store.state.user.info)
+      // console.log(item)
+      console.log(item.meta.roles.indexOf(store.state.user.info.role))
+      if(item.meta.roles.indexOf(store.state.user.info.role) === -1) return
+      // console.log(item.meta.roles.indexOf(store.state.user.info.role))
       modules.push(item)
       router.addRoute(item)
     })

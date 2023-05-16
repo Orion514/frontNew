@@ -6,7 +6,7 @@ const route: Route[] = [
     path: '/print',
     component: Layout,
     redirect: '/print/js',
-    meta: { title: 'message.menu.print.name', icon: 'sfont system-24gl-printer' },
+    meta: { title: 'message.menu.print.name', icon: 'sfont system-24gl-printer',roles: ['admin', 'user'] },
     children: [
       {
         path: 'js',

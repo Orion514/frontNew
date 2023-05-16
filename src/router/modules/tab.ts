@@ -1,6 +1,6 @@
 /*
  * @Date: 2022-09-25 20:07:27
- * @Description: 
+ * @Description:
  */
 import type { Route } from '../index.type'
 import Layout from '@/layout/index.vue'
@@ -10,7 +10,7 @@ const route: Route[] = [
     path: '/tab',
     component: Layout,
     redirect: '/tab/index',
-    meta: { title: 'message.menu.print.name', icon: 'sfont system-24gl-printer' },
+    meta: { title: 'message.menu.print.name', icon: 'sfont system-24gl-printer',roles: ['admin', 'user'] },
     children: [
       {
         path: 'index',

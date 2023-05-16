@@ -166,6 +166,11 @@ const tab = {
   tab: createNameComponent(() => import('@/views/main/tab/index.vue')),
 }
 
+/** 用户管理 */
+const user ={
+  user: createNameComponent(() => import('@/views/main/user/index.vue')),
+}
+
 /** 导出所有路由，供后端配置使用 */
 const allRoutes = {
   dashboard,
@@ -180,6 +185,7 @@ const allRoutes = {
   print,
   community,
   tab,
+  user,
 }
 
 export default allRoutes

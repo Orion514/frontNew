@@ -6,7 +6,7 @@ const route: Route[] = [
         path: '/dataConfig',
         component: Layout,
         redirect: '/dataConfig/downAndUpload',
-        meta: { title: '数据配置', icon: 'sfont system-home' },
+        meta: { title: '数据配置', icon: 'sfont system-home', roles: ['admin', 'user'] },
         children: [
             {
                 path: 'downAndUpload',

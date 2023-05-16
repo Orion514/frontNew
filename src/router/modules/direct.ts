@@ -6,7 +6,7 @@ const route: Route[] = [
     path: '/direct',
     component: Layout,
     redirect: '/direct/copy',
-    meta: { title: 'message.menu.directive.name', icon: 'sfont system-zidingyi' },
+    meta: { title: 'message.menu.directive.name', icon: 'sfont system-zidingyi' , roles: ['admin', 'user']},
     children: [
       {
         path: 'dragable',

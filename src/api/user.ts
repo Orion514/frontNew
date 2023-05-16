@@ -5,7 +5,7 @@ export function loginApi(data: object) {
   return request({
     url: '/user/login',
     method: 'post',
-    baseURL: '/mock',
+    // baseURL: '/mock',
     data
   })
 }
@@ -15,7 +15,7 @@ export function getInfoApi(data: object) {
   return request({
     url: '/user/info',
     method: 'post',
-    baseURL: '/mock',
+    // baseURL: '/mock',
     data
   })
 }
@@ -29,7 +29,7 @@ export function loginOutApi() {
   })
 }
 
-/** 获取用户信息Api */
+/** 修改密码Api */
 export function passwordChange(data: object) {
   return request({
     url: '/user/passwordChange',
@@ -46,17 +46,19 @@ export function getMenuApi() {
     method: 'post',
     baseURL: '/mock'
   })
-
 }
-export function getUserList(data: { data: { input: string; page: number; pageSize: number } }) {
+
+/** 获取用户列表 */
+export function getUserList(data) {
   return request({
     url: '/user/list',
-    method: 'post',
+    method: 'get',
     // baseURL: '/mock',
-    data
+    params: data
   })
 }
 
+/** 注册用户 */
 export function register(data: { name: string; password: any; email: string }) {
   return request({
     url: '/user/register',
@@ -65,3 +67,24 @@ export function register(data: { name: string; password: any; email: string }) {
     data
   })
 }
+
+/** 删除用户 */
+export function delUser(data) {
+  return request({
+    url: '/user/del',
+    method: 'delete',
+    // baseURL: '/mock',
+    params: data
+  })
+}
+
+/** 修改用户 */
+export function updateUser(data) {
+    return request({
+        url: '/user/update',
+        method: 'put',
+        // baseURL: '/mock',
+        data
+    })
+}
+

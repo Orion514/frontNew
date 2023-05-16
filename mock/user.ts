@@ -21,6 +21,9 @@ export default [
           code: 200,
           data: {
             token: user.token,
+            role: user.role,
+            id: user.id,
+            name: user.name,
           },
         };
       } else {
@@ -40,12 +43,15 @@ export default [
       const { token } = body
       const info = users.find(user => {
         return user.token === token
-      }).info
+      })
       if (info) {
         return {
           code: 200,
           data: {
-            info: info
+            token: info.token,
+            role: info.role,
+            id: info.id,
+            name: info.name,
           },
         };
       } else {

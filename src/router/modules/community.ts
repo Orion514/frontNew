@@ -6,7 +6,7 @@ const route: Route[] = [
     path: '/community',
     component: Layout,
     redirect: '/community/qq',
-    meta: { title: 'message.menu.community.name', icon: 'sfont system-shequ' },
+    meta: { title: 'message.menu.community.name', icon: 'sfont system-shequ', roles: ['admin', 'user'] },
     children: [
       {
         path: 'qq',

@@ -6,7 +6,7 @@ const route: Route[] = [
     path: '/systemManage',
     component: Layout,
     redirect: '/systemManage/menu',
-    meta: { title: 'message.menu.systemManage.name', icon: 'sfont system-xitongzhuangtai' },
+    meta: { title: 'message.menu.systemManage.name', icon: 'sfont system-xitongzhuangtai' ,roles: ['admin'] },
     alwayShow: true,
     children: [
       {

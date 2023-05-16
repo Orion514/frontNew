@@ -1,19 +1,5 @@
 <template>
   <div class="layout-container">
-<!--    <div class="layout-container-form flex space-between">-->
-<!--      <div class="layout-container-form-handle">-->
-<!--&lt;!&ndash;        <el-button type="primary" :icon="Plus" @click="handleAdd">{{ $t('message.common.add') }}</el-button>&ndash;&gt;-->
-<!--&lt;!&ndash;        <el-popconfirm :title="$t('message.common.delTip')" @confirm="handleDel(chooseData)">&ndash;&gt;-->
-<!--&lt;!&ndash;          <template #reference>&ndash;&gt;-->
-<!--&lt;!&ndash;            <el-button type="danger" :icon="Delete" :disabled="chooseData.length === 0">{{ $t('message.common.delBat') }}</el-button>&ndash;&gt;-->
-<!--&lt;!&ndash;          </template>&ndash;&gt;-->
-<!--&lt;!&ndash;        </el-popconfirm>&ndash;&gt;-->
-<!--      </div>-->
-<!--      <div class="layout-container-form-search">-->
-<!--&lt;!&ndash;        <el-input v-model="query.input" :placeholder="$t('message.common.searchTip')" @change="getTableData(true)"></el-input>&ndash;&gt;-->
-<!--&lt;!&ndash;        <el-button type="primary" :icon="Search" class="search-btn" @click="getTableData(true)">{{ $t('message.common.search') }}</el-button>&ndash;&gt;-->
-<!--      </div>-->
-<!--    </div>-->
     <div class="layout-container-table">
       <Table
         ref="table"
@@ -28,19 +14,9 @@
         <el-table-column prop="name" label="指标名" align="center" />
         <el-table-column prop="weight" label="指标权重" align="center" />
         <el-table-column prop="value" label="指标值" align="center" />
-<!--        <el-table-column prop="radioName" label="单选框" align="center" />-->
-<!--        <el-table-column :label="$t('message.common.handle')" align="center" fixed="right" width="200">-->
-<!--          <template #default="scope">-->
-<!--            <el-button @click="handleEdit(scope.row)">{{ $t('message.common.update') }}</el-button>-->
-<!--            <el-popconfirm :title="$t('message.common.delTip')" @confirm="handleDel([scope.row])">-->
-<!--              <template #reference>-->
-<!--                <el-button type="danger">{{ $t('message.common.del') }}</el-button>-->
-<!--              </template>-->
-<!--            </el-popconfirm>-->
-<!--          </template>-->
-<!--        </el-table-column>-->
+
       </Table>
-<!--      <Layer :layer="layer" @getTableData="getTableData" v-if="layer.show" />-->
+
     </div>
   </div>
 </template>
@@ -53,11 +29,6 @@ import { Page } from '@/components/table/type'
 import {getData} from '@/api/result'
 import {useStore} from 'vuex'
 
-import { ElMessage } from 'element-plus'
-import type { LayerInterface } from '@/components/layer/index.vue'
-import { selectData, radioData } from './enum'
-import { Plus, Search, Delete } from '@element-plus/icons'
-import store from 'element-plus/es/components/table/src/store'
 export default defineComponent({
   components: {
     Table,
@@ -104,7 +75,7 @@ export default defineComponent({
         }
         tableData.value = res.data.list
         console.log(tableData.value)
-        page.total = Number(res.data.page.total)
+        page.total = Number(res.data.pager.total)
       })
       .catch(error => {
         tableData.value = []

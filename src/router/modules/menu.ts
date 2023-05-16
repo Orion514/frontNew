@@ -8,7 +8,7 @@ const route: Route[] = [
     component: Layout,
     redirect: '/menu/menu-1/menu-1-1',
     alwayShow: true,
-    meta: { title: '指标体系树', icon: 'sfont system-menu' },
+    meta: { title: '指标体系树', icon: 'sfont system-menu',roles: ['admin', 'user'] },
     children: [
       {
         path: 'menu-1',

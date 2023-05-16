@@ -7,7 +7,7 @@ const route: Route[] = [
     component: Layout,
     redirect: '/optimize/dimension-lowering/low-1',
     alwayShow: true,
-    meta: { title: '优化管理', icon: 'sfont system-menu' },
+    meta: { title: '优化管理', icon: 'sfont system-menu' ,roles: ['admin', 'user']},
     children: [
       {
         path: 'low-1',

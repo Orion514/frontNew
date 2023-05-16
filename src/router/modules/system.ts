@@ -8,7 +8,7 @@ const route: Route[] = [
     component: Layout,
     redirect: '/404',
     hideMenu: true,
-    meta: { title: 'message.menu.system.name' },
+    meta: { title: 'message.menu.system.name',roles: ['admin', 'user'] },
     children: [
       {
         path: '/404',

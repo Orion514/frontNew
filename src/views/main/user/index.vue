@@ -5,13 +5,13 @@
 <!--        <el-button type="primary" icon="el-icon-circle-plus-outline" @click="handleAdd">新增</el-button>-->
         <el-popconfirm title="批量删除" @confirm="handleDel(chooseData)">
           <template #reference>
-            <el-button type="danger" icon="el-icon-delete" :disabled="chooseData.length === 0">批量删除</el-button>
+            <el-button type="danger" :icon="Delete" :disabled="chooseData.length === 0">批量删除</el-button>
           </template>
         </el-popconfirm>
       </div>
       <div class="layout-container-form-search">
         <el-input v-model="query.input" placeholder="请输入关键词进行检索" @change="getTableData(true)"></el-input>
-        <el-button type="primary" icon="el-icon-search" class="search-btn" @click="getTableData(true)">搜索</el-button>
+        <el-button type="primary" :icon="Search" class="search-btn" @click="getTableData(true)">搜索</el-button>
       </div>
     </div>
     <div class="layout-container-table">
@@ -30,7 +30,7 @@
         <el-table-column prop="email" label="邮箱" align="center" />
         <el-table-column prop="role" label="角色" align="center" column-key="role"
                          filterable
-                         :filters="[{ text: '管理员', value: 'admin' }, { text: '普通用户', value: 'user' }]"
+                         :filters="[{ text: '管理员', value: '管理员' }, { text: '普通用户', value: '普通用户' }]"
                          :filter-method="classfy"
                          filter-placement="bottom-end"
           >
@@ -40,6 +40,7 @@
             <el-tag :type = 'handleType(row.role)' >{{row.role}}</el-tag>
           </template>
         </el-table-column>
+
 
         <el-table-column label="操作" align="center" fixed="right" width="200">
           <template #default="scope">
@@ -60,11 +61,11 @@
 <script>
 import { defineComponent, ref, reactive } from 'vue'
 import Table from '@/components/table/index.vue'
-import { getData, del } from '@/api/table'
 import Layer from './layer.vue'
 import { ElMessage } from 'element-plus'
 import { roleData} from "./enum";
-import {getUserList} from "../../../api/user";
+import {delUser, getUserList} from "../../../api/user";
+import { Plus, Search, Delete } from '@element-plus/icons'
 
 export default defineComponent({
   name: 'crudTable',
@@ -94,8 +95,9 @@ export default defineComponent({
     const chooseData = ref([])
 
     function handleType(a) {
-      if (a === 'admin') return 'warning'
-      if (a === 'user') return 'primary'
+      if (a === '管理员') return 'warning'
+      if (a === '普通用户') return 'primary'
+      return 'info'
     }
 
     const handleSelectionChange = (val) => {
@@ -118,13 +120,13 @@ export default defineComponent({
         pageSize: page.size,
         ...query
       }
-      getUserList({data: params})
+      getUserList(params)
           .then(res => {
             let data = res.data.list
             if (Array.isArray(data)) {
               data.forEach(d => {
-                const select = roleData.find(select => select.value === d.choose)
-                select ? d.chooseName = select.label : d.chooseName = d.choose
+                const select = roleData.find(select => select.value === d.role)
+                select ? d.role = select.label : d.role = '未知'
               })
             }
             tableData.value = res.data.list
@@ -146,7 +148,7 @@ export default defineComponent({
           return e.id
         }).join(',')
       }
-      del(params)
+      delUser(params)
           .then(res => {
             ElMessage({
               type: 'success',
@@ -154,12 +156,6 @@ export default defineComponent({
             })
             getTableData(tableData.value.length === 1 ? true : false)
           })
-    }
-    // 新增弹窗功能
-    const handleAdd = () => {
-      layer.title = '新增数据'
-      layer.show = true
-      delete layer.row
     }
     // 编辑弹窗功能
     const handleEdit = (row) => {
@@ -176,12 +172,14 @@ export default defineComponent({
       page,
       layer,
       handleSelectionChange,
-      handleAdd,
       handleEdit,
       handleDel,
       getTableData,
       handleType,
-      classfy
+      classfy,
+      Plus,
+      Search,
+      Delete,
     }
   }
 })

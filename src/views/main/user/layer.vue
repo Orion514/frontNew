@@ -18,9 +18,9 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
-import { add, update } from '@/api/table'
 import { roleData } from './enum'
 import Layer from '@/components/layer/index.vue'
+import {updateUser} from "@/api/user";
 
 export default defineComponent({
   components: {
@@ -52,7 +52,6 @@ export default defineComponent({
     }
 
     function  checkEmail (rule, value, callback) {
-      console.log(value)
       const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
       if (!value) {
         return callback(new Error('邮箱不能为空'))
@@ -114,8 +113,7 @@ export default defineComponent({
     },
     // 编辑提交事件
     updateForm(params) {
-      console.log(params)
-      update(params)
+      updateUser(params)
       .then(res => {
         this.$message({
           type: 'success',
