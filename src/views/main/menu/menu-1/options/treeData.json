@@ -3,9 +3,11 @@
   "children": [
     {
       "name": "analytics",
+      "value": 3546,
       "children": [
         {
           "name": "cluster",
+          "value": 3546,
           "children": [
             {"name": "AgglomerativeCluster", "value": 3938},
             {"name": "CommunityStructure", "value": 3812},

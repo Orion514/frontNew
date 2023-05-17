@@ -25,17 +25,16 @@
         @getTableData="getTableData"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column prop="name4" label="四级指标(本叶结点)" align="center" />
-        <el-table-column prop="weight4" label="本结点权重" align="center" />
-        <el-table-column prop="name3" label="三级指标(父亲结点)" align="center" />
-        <el-table-column prop="weight3" label="三级结点权重" align="center" />
-        <el-table-column prop="name2" label="二级指标(祖父结点)" align="center" />
-        <el-table-column prop="weight2" label="二级结点权重" align="center" />
-        <el-table-column prop="name1" label="一级指标(根结点)" align="center" />
-        <el-table-column prop="weight1" label="一级结点权重" align="center" />
+        <el-table-column
+            v-for="item in columns"
+            :key="item.prop"
+            :prop="item.prop"
+            :label="item.label"
+        >
+        </el-table-column>
 <!--        <el-table-column prop="chooseName" label="选择器" align="center" />-->
 <!--        <el-table-column prop="radioName" label="单选框" align="center" />-->
-        <el-table-column :label="$t('message.common.handle')" align="center" fixed="right" width="200">
+        <el-table-column :label="$t('message.common.handle')" align="center" fixed="right" width="150">
           <template #default="scope">
             <el-button @click="handleEdit(scope.row)">{{ $t('message.common.update') }}</el-button>
             <el-popconfirm :title="$t('message.common.delTip')" @confirm="handleDel([scope.row])">
@@ -52,15 +51,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive } from 'vue'
+import { defineComponent, ref, reactive, computed } from 'vue'
 import Table from '@/components/table/index.vue'
 import { Page } from '@/components/table/type'
-import { getData, del } from '@/api/table'
+import { getData, del, update , add} from '@/api/pages/crudeTable'
 import Layer from './layer.vue'
 import { ElMessage } from 'element-plus'
 import type { LayerInterface } from '@/components/layer/index.vue'
-import { selectData, radioData } from './enum'
 import { Plus, Search, Delete } from '@element-plus/icons'
+import Store from "@/store";
 export default defineComponent({
   name: 'crudTable',
   components: {

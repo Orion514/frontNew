@@ -1,11 +1,8 @@
 <template>
   <Layer :layer="layer" @confirm="submit" ref="layerDom">
-    <el-form :model="form" :rules="rules" ref="ruleForm" label-width="120px" style="margin-right:30px;">
-      <el-form-item label="叶子结点指标权重" prop="number">
-        <el-input v-model="form.number" @input="handleInput" placeholder="只能输入正数"></el-input>
-      </el-form-item>
-      <el-form-item label="叶子结点指标名称" prop="name" placeholder="请输入名称">
-        <el-input v-model="form.name" ></el-input>
+    <el-form :model="form" ref="ruleForm" rules="rules" label-width="120px" style="margin-right:30px;">
+      <el-form-item v-for="(value, key) in rowData" :key="value" :label="key">
+        <el-input v-model="form[key]" :model-value="computedValue(key)"></el-input>
       </el-form-item>
     </el-form>
   </Layer>
@@ -15,10 +12,12 @@
 import type { LayerType } from '@/components/layer/index.vue'
 import type { Ref } from 'vue'
 import type { ElFormItemContext } from 'element-plus/lib/el-form/src/token'
-import { defineComponent, ref } from 'vue'
-import { add, update } from '@/api/table'
-import { selectData, radioData } from './enum'
+import {defineComponent, reactive, ref} from 'vue'
+import { add, update } from '@/api/pages/crudeTable'
 import Layer from '@/components/layer/index.vue'
+import store from '@/store'
+
+
 export default defineComponent({
   components: {
     Layer
@@ -33,43 +32,67 @@ export default defineComponent({
           showButton: true
         }
       }
-    }
+    },
   },
   setup(props, ctx) {
     const ruleForm: Ref<ElFormItemContext|null> = ref(null)
     const layerDom: Ref<LayerType|null> = ref(null)
-    let form = ref({
-      name: '',
-      number: '',
-    })
-    const rules = {
-      name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
-      // choose: [{ required: true, message: '请选择', trigger: 'blur' }],
-      // radio: [{ required: true, message: '请选择', trigger: 'blur' }],
-      number: [{required: true, message: '请输入权重', trigger: 'blur'}]
-    }
+    let rules = ref({})
+    let form = ref({})
+    let rowData = ref({})
+    let isUpdate = true
     init()
     function init() { // 用于判断新增还是编辑功能
-      if (props.layer.row) {
-        form.value = JSON.parse(JSON.stringify(props.layer.row)) // 数量量少的直接使用这个转
+      if (props.layer.isUpdate) {
+        rowData.value = JSON.parse(JSON.stringify(props.layer.row)) // 数量量少的直接使用这个转
+        console.log('更新')
+        console.log()
+        isUpdate = true
       } else {
-
+        console.log('增加')
+        isUpdate = false
+        rowData.value = JSON.parse(JSON.stringify(props.layer.row))
+        //错误的
+        // rowData.value = JSON.parse(JSON.stringify(props.layer.row))
+        // for (let key in rowData) {
+        //   rowData.value[key] = {};
+        // }
+        // console.log(rowData.value)
       }
     }
     return {
-      form,
       rules,
       layerDom,
       ruleForm,
-      selectData,
-      radioData
+      rowData,
+      form
     }
   },
   methods: {
-    handleInput() {
-      const pattern = /^\d*\.?\d*$/
-      if (!pattern.test(this.form.number)) {
-        this.form.number = ''
+
+    generateRules() {
+      const rules = {};
+      // 遍历 rowData 对象，为每个表单字段生成验证规则
+      for (const key in this.rowData) {
+        if (Object.prototype.hasOwnProperty.call(this.rowData, key)) {
+          rules[key] = [
+            {
+              required: true,
+              message: `${key}不能为空`,
+              trigger: 'blur',
+            },
+            {
+              validator: (rule, value, callback) => {
+                if (/^[0-9]+(.[0-9]{1,2})?$/.test(value)) {
+                  callback();
+                } else {
+                  callback(new Error('请输入正确的数字，且最多只能保留两位小数！'));
+                }
+              },
+              trigger: 'blur',
+            },
+          ];
+        }
       }
     },
     submit() {
@@ -111,6 +134,13 @@ export default defineComponent({
             this.$emit('getTableData', false)
             this.layerDom && this.layerDom.close()
           })
+    }
+  },
+  computed: {
+    computedValue() {
+      return (key) => {
+        return this.isUpdate ? this.rowData[key] : '';
+      }
     }
   }
 })

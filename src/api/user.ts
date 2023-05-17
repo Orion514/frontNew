@@ -52,9 +52,9 @@ export function getMenuApi() {
 export function getUserList(data) {
   return request({
     url: '/user/list',
-    method: 'get',
+    method: 'post',
     // baseURL: '/mock',
-    params: data
+    data
   })
 }
 

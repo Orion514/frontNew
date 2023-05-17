@@ -5,81 +5,66 @@ const route: Route[] = [
   {
     path: '/optimize',
     component: Layout,
-    redirect: '/optimize/dimension-lowering/low-1',
+    redirect: '/optimize/dimension-lowering',
     alwayShow: true,
     meta: { title: '优化管理', icon: 'sfont system-menu' ,roles: ['admin', 'user']},
     children: [
       {
-        path: 'low-1',
-        component: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-1/low-1-1.vue')),
-        redirect: '/optimize/dimension-lowering/low-1/low-1-1',
+        path: 'dimension-lowering',
+        component: createNameComponent(() => import('@/components/menu/index.vue')),
+        redirect: '/optimize/dimension-lowering/low-1',
         meta: { title: '降维' },
         children: [
           {
-            path: 'low-1-1',
-            component: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-1/low-1-1.vue')),
+            path: 'low-1',
+            component: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-1.vue')),
             //meta: { title: 'message.menu.menu.menu_1' }
             meta: { title: '主成分分析' }
           },
           {
-            path: 'low-1-2',
-            component: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-1/low-1-2.vue')),
+            path: 'low-2',
+            component: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-2.vue')),
             meta: { title: '因子分析' }
           },
           {
-            path: 'low-1-3',
-            component: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-1/low-1-3.vue')),
+            path: 'low-3',
+            component: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-3.vue')),
             meta: { title: 'K-Means' }
           }
         ]
       },
       {
-        path: 'low-2',
-        component: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-2/low-2-1.vue')),
+        path: 'merge',
+        component: createNameComponent(() => import('@/components/menu/index.vue')),
         //meta: { title: 'message.menu.menu.menu_1' }
-        redirect: '/optimize/dimension-lowering/low-2/low-2-1',
+        redirect: '/optimize/merge/merge-1',
         meta: { title: '合并' },
         children: [
           {
-            path: 'low-2-1',
-            component: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-2/low-2-1.vue')),
+            path: 'merge-1',
+            component: createNameComponent(() => import('@/views/main/optimize/merge/merge-1.vue')),
             //meta: { title: 'message.menu.menu.menu_1' }
             meta: { title: 'Spearman' }
           },
           {
-            path: 'low-2-2',
-            component: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-2/low-2-2.vue')),
+            path: 'merge-2',
+            component: createNameComponent(() => import('@/views/main/optimize/merge/merge-2.vue')),
             meta: { title: 'Pearson' }
-          },
-          {
-            path: 'low-2-3',
-            component: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-2/low-2-3.vue')),
-            meta: { title: '矩形图' }
           }
         ]
       },
       {
-        path: 'low-3',
-        component: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-3/low-3-1.vue')),
-        redirect: '/optimize/dimension-lowering/low-3/low-3-1',
+        path: 'weight',
+        component: createNameComponent(() => import('@/components/menu/index.vue')),
+        redirect: '/optimize/weight/entropy',
         //meta: { title: 'message.menu.menu.menu_1' }
         meta: { title: '权重分析' },
         children: [
           {
-            path: 'low-3-1',
-            component: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-3/low-3-1.vue')),
+            path: 'entropy',
+            component: createNameComponent(() => import('@/views/main/optimize/weight/entropy.vue')),
             //meta: { title: 'message.menu.menu.menu_1' }
-            meta: { title: '径向树状图' }
-          },
-          {
-            path: 'low-3-2',
-            component: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-3/low-3-2.vue')),
-            meta: { title: '普通树状图' }
-          },
-          {
-            path: 'low-3-3',
-            component: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-3/low-3-3.vue')),
-            meta: { title: '矩形图' }
+            meta: { title: '熵权法' }
           }
         ]
       }

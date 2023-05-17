@@ -19,12 +19,14 @@ import Community from '../modules/community'
 import Tab from '../modules/tab'
 import DataConfig from "@/router/modules/dataConfig";
 import User from "@/router/modules/user";
+import Scene from "@/router/modules/scene";
 
 /** 登录后需要动态加入的本地路由 */
 const FrontRoutes: Route[] = [
   ...Dashboard,
   ...Document,
   ...DataConfig,
+  ...Scene,
   ...Optimize,
   ...Pages,
   ...Menu,

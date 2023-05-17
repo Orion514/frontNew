@@ -1,4 +1,5 @@
 <template>
+  <div>menu-1-2</div>
   <div className="layout-container">
     <div ref="dom" className="chart"></div>
   </div>

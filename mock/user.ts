@@ -41,6 +41,7 @@ export default [
     method: 'post',
     response: ({ body }: { body: any }) => {
       const { token } = body
+      // @ts-ignore
       const info = users.find(user => {
         return user.token === token
       })

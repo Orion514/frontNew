@@ -10,6 +10,11 @@ const dashboard = {
   dashboard: createNameComponent(() => import('@/views/main/dashboard/index.vue')),
 }
 
+const scene = {
+  /** 场景切换 */
+  scene: createNameComponent(() => import('@/views/scene/getTreeBySid.vue')),
+}
+
 /** 文档 */
 const document = {
   /** 使用说明 */
@@ -31,28 +36,20 @@ const document = {
 }
 
 
-/** 组件 */
-const component = {
-  /** 按钮 */
-  button: createNameComponent(() => import('@/views/main/components/button/index.vue')),
-  /** 文本编辑器 */
-  wordEditor: createNameComponent(() => import('@/views/main/components/wordEditor/index.vue')),
-  /** md编辑器 */
-  mdEditor: createNameComponent(() => import('@/views/main/components/mdEditor/index.vue')),
-  /** 代码编辑器 */
-  codeEditor: createNameComponent(() => import('@/views/main/components/codeEditor/index.vue')),
-  /** json编辑器 */
-  jsonEditor: createNameComponent(() => import('@/views/main/components/jsonEditor/index.vue')),
-  /** 可拖拽面板 */
-  dragPane: createNameComponent(() => import('@/views/main/components/dragPane/index.vue')),
-  /** 地图 */
-  map: createNameComponent(() => import('@/views/main/components/map/index.vue')),
-  /** 图片裁剪 */
-  cutPhoto: createNameComponent(() => import('@/views/main/components/cutPhoto/index.vue')),
-  /** 右键菜单 */
-  rightMenu: createNameComponent(() => import('@/views/main/components/rightMenu/index.vue')),
-  /** 导出excel */
-  exportExcel: createNameComponent(() => import('@/views/main/components/exportExcel/index.vue')),
+/** 优化管理 */
+const optimize = {
+  /** 三级菜单1 */
+  low_1: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-1.vue')),
+  /** 三级菜单1 */
+  low_2: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-2.vue')),
+  /** 三级菜单1 */
+  low_3: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-3.vue')),
+  /** 三级菜单1 */
+  merge_1: createNameComponent(() => import('@/views/main/optimize/merge/merge-1.vue')),
+  /** 三级菜单1 */
+  merge_2: createNameComponent(() => import('@/views/main/optimize/merge/merge-2.vue')),
+  /** 三级菜单1 */
+  entropy: createNameComponent(() => import('@/views/main/optimize/weight/entropy.vue')),
 }
 
 const dataConfig = {
@@ -60,18 +57,42 @@ const dataConfig = {
     downAndUpload: createNameComponent(() => import('@/views/main/dataConfig/downAndUpload/index.vue')),
 }
 
+// /** 组件 */
+// const component = {
+//   /** 按钮 */
+//   button: createNameComponent(() => import('@/views/main/components/button/index.vue')),
+//   /** 文本编辑器 */
+//   wordEditor: createNameComponent(() => import('@/views/main/components/wordEditor/index.vue')),
+//   /** md编辑器 */
+//   mdEditor: createNameComponent(() => import('@/views/main/components/mdEditor/index.vue')),
+//   /** 代码编辑器 */
+//   codeEditor: createNameComponent(() => import('@/views/main/components/codeEditor/index.vue')),
+//   /** json编辑器 */
+//   jsonEditor: createNameComponent(() => import('@/views/main/components/jsonEditor/index.vue')),
+//   /** 可拖拽面板 */
+//   dragPane: createNameComponent(() => import('@/views/main/components/dragPane/index.vue')),
+//   /** 地图 */
+//   map: createNameComponent(() => import('@/views/main/components/map/index.vue')),
+//   /** 图片裁剪 */
+//   cutPhoto: createNameComponent(() => import('@/views/main/components/cutPhoto/index.vue')),
+//   /** 右键菜单 */
+//   rightMenu: createNameComponent(() => import('@/views/main/components/rightMenu/index.vue')),
+//   /** 导出excel */
+//   exportExcel: createNameComponent(() => import('@/views/main/components/exportExcel/index.vue')),
+// }
+
 /** 页面 */
 const pages = {
   /** 业务表格 */
   crudTable: createNameComponent(() => import('@/views/main/pages/crudTable/index.vue')),
-  /** 分类表格 */
-  categoryTable: createNameComponent(() => import('@/views/main/pages/categoryTable/index.vue')),
+  // /** 分类表格 */
+  // categoryTable: createNameComponent(() => import('@/views/main/pages/categoryTable/index.vue')),
   /** 树形表格 */
   treeTable: createNameComponent(() => import('@/views/main/pages/resultTable/treeTable/index.vue')),
-  /** 卡片 */
-  card: createNameComponent(() => import('@/views/main/pages/card/index.vue')),
-  /** 工作台 */
-  work: createNameComponent(() => import('@/views/main/pages/work/index.vue')),
+  // /** 卡片 */
+  // card: createNameComponent(() => import('@/views/main/pages/card/index.vue')),
+  // /** 工作台 */
+  // work: createNameComponent(() => import('@/views/main/pages/work/index.vue')),
   /** 百度 */
   baidu: createNameComponent(() => import('@/views/main/pages/baidu/index.vue')),
 }
@@ -79,12 +100,6 @@ const pages = {
 /** 多级嵌套菜单 */
 const menu = {
   /** 二级菜单1 */
-  menu1: createNameComponent(() => import('@/views/main/menu/menu-1/menu-1-1.vue')),
-  /** 二级菜单2 */
-  menu2: createNameComponent(() => import('@/views/main/menu/menu-2/menu-2-1.vue')),
-  /** 二级菜单3 */
-  menu3: createNameComponent(() => import('@/views/main/menu/menu-3/menu-3-1.vue')),
-  /** 三级菜单1 */
   menu1_1: createNameComponent(() => import('@/views/main/menu/menu-1/menu-1-1.vue')),
   /** 三级菜单1 */
   menu1_2: createNameComponent(() => import('@/views/main/menu/menu-1/menu-1-2.vue')),
@@ -102,6 +117,10 @@ const menu = {
   menu3_2: createNameComponent(() => import('@/views/main/menu/menu-3/menu-3-2.vue')),
   /** 三级菜单2 */
   menu3_3: createNameComponent(() => import('@/views/main/menu/menu-3/menu-3-3.vue')),
+}
+
+const dataConfig = {
+  downAndUpload: createNameComponent(() => import('@/views/main/dataConfig/downAndUpload.vue'))
 }
 
 /** 自定义指令 */
@@ -174,8 +193,11 @@ const user ={
 /** 导出所有路由，供后端配置使用 */
 const allRoutes = {
   dashboard,
+  scene,
   document,
-  component,
+  //component,
+  optimize,
+  dataConfig,
   dataConfig,
   pages,
   menu,
