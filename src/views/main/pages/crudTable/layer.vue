@@ -1,23 +1,23 @@
 <template>
   <Layer :layer="layer" @confirm="submit" ref="layerDom">
-    <el-form :model="form" ref="ruleForm" rules="rules" label-width="120px" style="margin-right:30px;">
-      <el-form-item v-for="(value, key) in rowData" :key="value" :label="key">
-        <el-input v-model="form[key]" :model-value="computedValue(key)"></el-input>
+    <el-form  :model="form" :rules="rules" ref="ruleForm" label-width="120px" style="margin-right:30px;">
+      <el-form-item  v-for="column in columns" :key="column.prop" :label="column.label" :prop="column.prop" >
+        <el-input  v-model="form[column.prop]" placeholder="请输入相应权重"></el-input>
       </el-form-item>
+
     </el-form>
   </Layer>
 </template>
 
 <script lang="ts">
 import type { LayerType } from '@/components/layer/index.vue'
-import type { Ref } from 'vue'
+import {reactive, Ref } from 'vue'
 import type { ElFormItemContext } from 'element-plus/lib/el-form/src/token'
-import {defineComponent, reactive, ref} from 'vue'
-import { add, update } from '@/api/pages/crudeTable'
+import { defineComponent, ref } from 'vue'
+import { add, update } from '@/api/table'
+import { selectData, radioData } from './enum'
 import Layer from '@/components/layer/index.vue'
-import store from '@/store'
-
-
+import {ElMessage} from "element-plus";
 export default defineComponent({
   components: {
     Layer
@@ -33,68 +33,68 @@ export default defineComponent({
         }
       }
     },
+    columns: {
+      type: Array,
+    },
   },
   setup(props, ctx) {
     const ruleForm: Ref<ElFormItemContext|null> = ref(null)
     const layerDom: Ref<LayerType|null> = ref(null)
-    let rules = ref({})
-    let form = ref({})
-    let rowData = ref({})
-    let isUpdate = true
+
+    const form = ref({})
+    const rules = ref([])
+
+
+    //根据columns 数组动态生成form和rules
+
+    for (const column of props.columns) {
+      form.value[column.prop] = '';
+      rules.value[column.prop] = [{
+        required: true,
+        message: `请输入${column.label}`,
+        trigger: 'blur',
+        prop: column.prop,
+        validator: (rule, value, callback) => {
+          if (value === '') {
+            callback(new Error('请输入' + column.label));
+          } else {
+            if (Number(value) < 0 || Number(value) > 1) {
+              callback(new Error('请输入0-1之间的数字'));
+            } else {
+              callback();
+            }
+          }
+        }
+      }]
+    }
+
+    // 定义用于验证权重加和的方法
+    function validateWeightSum() {
+      const sum = Object.values(form.value).reduce((acc, val) => acc + Number(val), 0)
+      console.log('sum', sum)
+      return Math.abs(sum - 1) < 1e-5
+    }
+    rules.value.push({ validator: validateWeightSum, trigger: 'submit' })
+
     init()
     function init() { // 用于判断新增还是编辑功能
-      if (props.layer.isUpdate) {
-        rowData.value = JSON.parse(JSON.stringify(props.layer.row)) // 数量量少的直接使用这个转
-        console.log('更新')
-        console.log()
-        isUpdate = true
+      if (props.layer.row) {
+        form.value = JSON.parse(JSON.stringify(props.layer.row)) // 数量量少的直接使用这个转
       } else {
-        console.log('增加')
-        isUpdate = false
-        rowData.value = JSON.parse(JSON.stringify(props.layer.row))
-        //错误的
-        // rowData.value = JSON.parse(JSON.stringify(props.layer.row))
-        // for (let key in rowData) {
-        //   rowData.value[key] = {};
-        // }
-        // console.log(rowData.value)
+
       }
     }
     return {
+      form,
       rules,
       layerDom,
       ruleForm,
-      rowData,
-      form
+      selectData,
+      radioData,
+      validateWeightSum
     }
   },
   methods: {
-
-    generateRules() {
-      const rules = {};
-      // 遍历 rowData 对象，为每个表单字段生成验证规则
-      for (const key in this.rowData) {
-        if (Object.prototype.hasOwnProperty.call(this.rowData, key)) {
-          rules[key] = [
-            {
-              required: true,
-              message: `${key}不能为空`,
-              trigger: 'blur',
-            },
-            {
-              validator: (rule, value, callback) => {
-                if (/^[0-9]+(.[0-9]{1,2})?$/.test(value)) {
-                  callback();
-                } else {
-                  callback(new Error('请输入正确的数字，且最多只能保留两位小数！'));
-                }
-              },
-              trigger: 'blur',
-            },
-          ];
-        }
-      }
-    },
     submit() {
       if (this.ruleForm) {
         this.ruleForm.validate((valid) => {
@@ -106,7 +106,7 @@ export default defineComponent({
               this.addForm(params)
             }
           } else {
-            return false;
+            ElMessage.error('表单有错')
           }
         });
       }
@@ -114,33 +114,26 @@ export default defineComponent({
     // 新增提交事件
     addForm(params: object) {
       add(params)
-          .then(res => {
-            this.$message({
-              type: 'success',
-              message: '新增成功'
-            })
-            this.$emit('getTableData', true)
-            this.layerDom && this.layerDom.close()
-          })
+      .then(res => {
+        this.$message({
+          type: 'success',
+          message: '新增成功'
+        })
+        this.$emit('getTableData', true)
+        this.layerDom && this.layerDom.close()
+      })
     },
     // 编辑提交事件
     updateForm(params: object) {
       update(params)
-          .then(res => {
-            this.$message({
-              type: 'success',
-              message: '编辑成功'
-            })
-            this.$emit('getTableData', false)
-            this.layerDom && this.layerDom.close()
-          })
-    }
-  },
-  computed: {
-    computedValue() {
-      return (key) => {
-        return this.isUpdate ? this.rowData[key] : '';
-      }
+      .then(res => {
+        this.$message({
+          type: 'success',
+          message: '编辑成功'
+        })
+        this.$emit('getTableData', false)
+        this.layerDom && this.layerDom.close()
+      })
     }
   }
 })

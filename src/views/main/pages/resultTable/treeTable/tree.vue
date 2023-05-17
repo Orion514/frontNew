@@ -82,7 +82,7 @@ export default defineComponent({
     }else{
       // getTreeData();
     }
-    getTreeData();
+    // getTreeData();
 
 
     return {

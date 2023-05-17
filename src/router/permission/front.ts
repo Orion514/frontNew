@@ -25,8 +25,8 @@ import Scene from "@/router/modules/scene";
 const FrontRoutes: Route[] = [
   ...Dashboard,
   ...Document,
-  ...DataConfig,
   ...Scene,
+  ...DataConfig,
   ...Optimize,
   ...Pages,
   ...Menu,

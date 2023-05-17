@@ -44,10 +44,9 @@ export default defineComponent({
     })
     const rules = {
       name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
-      // choose: [{ required: true, message: '请选择', trigger: 'blur' }],
-      // radio: [{ required: true, message: '请选择', trigger: 'blur' }],
       number: [{required: true, message: '请输入权重', trigger: 'blur'}]
     }
+    console.log(rules)
     init()
     function init() { // 用于判断新增还是编辑功能
       if (props.layer.row) {

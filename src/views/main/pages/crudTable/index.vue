@@ -25,18 +25,13 @@
         @getTableData="getTableData"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column
-            v-for="item in columns"
-            :key="item.prop"
-            :prop="item.prop"
-            :label="item.label"
-        >
-        </el-table-column>
-<!--        <el-table-column prop="chooseName" label="选择器" align="center" />-->
-<!--        <el-table-column prop="radioName" label="单选框" align="center" />-->
-        <el-table-column :label="$t('message.common.handle')" align="center" fixed="right" width="150">
+
+        <!-- 使用 v-for 遍历 columns 数组，动态渲染表格列 -->
+        <el-table-column v-for="column in columns" :key="column.prop" :prop="column.prop" :label="column.label" align="center" />
+
+        <el-table-column :label="$t('message.common.handle')" align="center" fixed="right" width="200">
           <template #default="scope">
-            <el-button @click="handleEdit(scope.row)">{{ $t('message.common.update') }}</el-button>
+            <el-button type="warning" @click="handleEdit(scope.row)">{{ $t('message.common.update') }}</el-button>
             <el-popconfirm :title="$t('message.common.delTip')" @confirm="handleDel([scope.row])">
               <template #reference>
                 <el-button type="danger">{{ $t('message.common.del') }}</el-button>
@@ -45,21 +40,24 @@
           </template>
         </el-table-column>
       </Table>
-      <Layer :layer="layer" @getTableData="getTableData" v-if="layer.show" />
+      <Layer :layer="layer" @getTableData="getTableData" v-if="layer.show"  :columns="columns" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, computed } from 'vue'
+import { defineComponent, ref, reactive } from 'vue'
 import Table from '@/components/table/index.vue'
 import { Page } from '@/components/table/type'
-import { getData, del, update , add} from '@/api/pages/crudeTable'
+import { getData, del } from '@/api/table'
 import Layer from './layer.vue'
 import { ElMessage } from 'element-plus'
 import type { LayerInterface } from '@/components/layer/index.vue'
+import { selectData, radioData } from './enum'
 import { Plus, Search, Delete } from '@element-plus/icons'
-import Store from "@/store";
+
+import {getTableCols} from "@/api/data";
+
 export default defineComponent({
   name: 'crudTable',
   components: {
@@ -86,9 +84,29 @@ export default defineComponent({
     const loading = ref(true)
     const tableData = ref([])
     const chooseData = ref([])
+    let columns = ref([])
+
     const handleSelectionChange = (val: []) => {
       chooseData.value = val
     }
+
+
+    // 获取列名数据
+    const getTable = (init: boolean) =>{
+      loading.value = true
+      if (init) {
+        page.index = 1
+      }
+      getTableCols()
+        .then(res=>{
+          columns.value = res.data.list
+          console.log(columns.value)
+      }).catch(error =>{
+        console.log(error);
+      });
+    }
+
+
     // 获取表格数据
     // params <init> Boolean ，默认为false，用于判断是否需要初始化分页
     const getTableData = (init: boolean) => {
@@ -152,6 +170,7 @@ export default defineComponent({
       layer.row = row
       layer.show = true
     }
+    getTable(true)
     getTableData(true)
     return {
       Plus,
@@ -163,11 +182,13 @@ export default defineComponent({
       loading,
       page,
       layer,
+      columns,
       handleSelectionChange,
       handleAdd,
       handleEdit,
       handleDel,
-      getTableData
+      getTableData,
+      getTable
     }
   }
 })

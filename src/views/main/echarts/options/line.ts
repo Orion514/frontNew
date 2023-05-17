@@ -16,9 +16,20 @@ const options = {
   legend: {
     data: ['Line 1', 'Line 2', 'Line 3', 'Line 4', 'Line 5']
   },
+  dataZoom: [
+    {
+      type: 'inside'
+    }
+  ],
   toolbox: {
     feature: {
-      saveAsImage: {}
+      saveAsImage: {},
+      dataView: {},
+      restore: {},
+      dataZoom: {},
+      magicType: {
+        type: ['line', 'bar'], // 切换图表类型，这里示例切换为折线图和柱状图
+      },
     }
   },
   grid: {

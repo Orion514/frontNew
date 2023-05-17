@@ -37,12 +37,8 @@ async function addRoutes() {
       return
     }
     FrontRoutes.forEach(item => {
-      // console.log(item)
-      // console.log(store.state.user.info)
-      // console.log(item)
-      console.log(item.meta.roles.indexOf(store.state.user.info.role))
+      // @ts-ignore
       if(item.meta.roles.indexOf(store.state.user.info.role) === -1) return
-      // console.log(item.meta.roles.indexOf(store.state.user.info.role))
       modules.push(item)
       router.addRoute(item)
     })

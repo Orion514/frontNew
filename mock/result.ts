@@ -1,7 +1,6 @@
 import { MockMethod } from 'vite-plugin-mock'
 import Mock from 'mockjs';
 
-
 export default [
     {
         url: `/mock/result/getResult`,
@@ -85,6 +84,27 @@ export default [
                     }]
                 }
                 ],
+                msg: ''
+            };
+        }
+    },
+    {
+        url: `/mock/result/getDataIds`,
+        method: 'get',
+        response: ({ body }: { body: any }) => {
+            return {
+                code: 200,
+                data: {
+                    ['list|50']:[{
+                        'id|+1': 0,
+                        'name': '@name',
+                    }],
+                    pager: {
+                        page: 1,
+                        pageSize: 20,
+                        total: 200
+                    }
+                },
                 msg: ''
             };
         }

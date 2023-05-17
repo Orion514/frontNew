@@ -11,6 +11,8 @@ export function getTree(data) {
     })
 }
 
+
+// 根据dataId和indexId得到直接孩子
 export function getData(data) {
     return request({
         url: '/result/getResult',
@@ -19,3 +21,15 @@ export function getData(data) {
         params: data
     })
 }
+
+// 根据groupId得到DataIds
+export function getDataIdsByGroupId(data){
+    return request({
+        url: '/result/getDataIds',
+        method: 'get',
+        baseURL: '/mock',
+        params: data
+    })
+}
+
+

@@ -12,7 +12,8 @@ const dashboard = {
 
 const scene = {
   /** 场景切换 */
-  scene: createNameComponent(() => import('@/views/scene/getTreeBySid.vue')),
+  elder: createNameComponent(() => import('@/views/main/scene/elder.vue')),
+  test: createNameComponent(() => import('@/views/main/scene/test.vue')),
 }
 
 /** 文档 */
@@ -83,7 +84,7 @@ const dataConfig = {
 
 /** 页面 */
 const pages = {
-  /** 业务表格 */
+  /** 列表表格 */
   crudTable: createNameComponent(() => import('@/views/main/pages/crudTable/index.vue')),
   // /** 分类表格 */
   // categoryTable: createNameComponent(() => import('@/views/main/pages/categoryTable/index.vue')),
@@ -117,10 +118,6 @@ const menu = {
   menu3_2: createNameComponent(() => import('@/views/main/menu/menu-3/menu-3-2.vue')),
   /** 三级菜单2 */
   menu3_3: createNameComponent(() => import('@/views/main/menu/menu-3/menu-3-3.vue')),
-}
-
-const dataConfig = {
-  downAndUpload: createNameComponent(() => import('@/views/main/dataConfig/downAndUpload.vue'))
 }
 
 /** 自定义指令 */
@@ -197,7 +194,6 @@ const allRoutes = {
   document,
   //component,
   optimize,
-  dataConfig,
   dataConfig,
   pages,
   menu,

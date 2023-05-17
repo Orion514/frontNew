@@ -6,14 +6,15 @@
         class="demo-tabs"
         type="border-card"
     >
+
       <el-tab-pane label="树形表格" name="table" style="height:780px"  >
         <treeTable/>
       </el-tab-pane>
 
-      <el-tab-pane label="树形图" name="treeChart" style="height:780px" >
-<!--        <treeChart></treeChart>-->
-        树形图
+      <el-tab-pane label="树形图" name="graph" style="height:780px" >
+        <graph/>
       </el-tab-pane>
+
     </el-tabs>
   </div>
 
@@ -24,11 +25,13 @@
 import treeTable from "@/views/main/pages/resultTable/treeTable/index.vue";
 import type { TabsPaneContext} from "element-plus";
 import {defineComponent, ref} from "vue";
+import graph from "@/views/main/pages/resultTable/graph/index.vue";
 
 export default defineComponent( {
   name: "index",
   components: {
-    treeTable
+    treeTable,
+    graph
   },
 
   setup() {

@@ -38,6 +38,7 @@
   "devDependencies": {
     "@types/mockjs": "^1.0.7",
     "@types/node": "^17.0.21",
+    "@types/throttle-debounce": "^5.0.0",
     "@vitejs/plugin-vue": "^2.2.4",
     "@vue/compiler-sfc": "^3.2.31",
     "@webxrd/vite-plugin-svg": "^1.0.5",

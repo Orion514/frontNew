@@ -6,7 +6,7 @@
         v-model:page="page"
         v-loading="loading"
         :showIndex="true"
-        :showSelection="true"
+        :showSelection="false"
         :data="tableData"
         @getTableData="getTableData"
         @selection-change="handleSelectionChange"
