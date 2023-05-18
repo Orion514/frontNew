@@ -52,7 +52,31 @@ export default [
                 }
             }
         }
-    }
-
+    },
+    {
+        url: `/mock/data/getGruops`,
+        method: 'get',
+        response: ({ body }: { body: { pageSize: number } }) => {
+            const pageSize = body.pageSize
+            console.log(pageSize)
+            return {
+                code: 200,
+                data: {
+                    [`list|50`]: [{
+                        'id|+1': 0,
+                        rows: Mock.Random.natural(1, 1000),
+                        cols: Mock.Random.natural(1,1000),
+                        time: Mock.Random.time()
+                    }],
+                    msg: '',
+                    pager:{
+                        page: 1,
+                        pageSize:20,
+                        total:198
+                    }
+                }
+            }
+        }
+    },
 
 ]

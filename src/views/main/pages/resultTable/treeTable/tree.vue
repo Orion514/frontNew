@@ -80,7 +80,7 @@ export default defineComponent({
     if(store.state.user.groupid === 0){
       ElMessage.error("请先上传数据并启用");
     }else{
-      // getTreeData();
+      getTreeData();
     }
     // getTreeData();
 

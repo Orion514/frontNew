@@ -12,11 +12,11 @@ const route: Route[] = [
       {
         path: 'dimension-lowering',
         component: createNameComponent(() => import('@/components/menu/index.vue')),
-        redirect: '/optimize/dimension-lowering/low-1',
+        redirect: '/optimize/dimension-lowering/PCA',
         meta: { title: '降维' },
         children: [
           {
-            path: 'low-1',
+            path: 'PCA',
             component: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-1.vue')),
             //meta: { title: 'message.menu.menu.menu_1' }
             meta: { title: '主成分分析' }

@@ -13,7 +13,8 @@ service.interceptors.request.use(
   (config: AxiosRequestConfig) => {
     // JWT鉴权处理
     if (store.getters['user/token']) {
-      config.headers['token'] = store.state.user.token
+      // @ts-ignore
+        config.headers['token'] = store.state.user.token
     }
     return config
   },

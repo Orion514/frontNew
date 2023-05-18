@@ -7,10 +7,10 @@
             <el-button type="danger" :icon="Delete" :disabled="chooseData.length === 0">{{ $t('message.common.delBat') }}</el-button>
           </template>
         </el-popconfirm>
-        <FileUploader fileType="Excel"  buttonType="primary" :userid="userid" :sceneid="sceneid" />
-        <FileUploader fileType="JSON"  buttonType="warning" :userid="userid" :sceneid="sceneid"  />
-        <FileUploader fileType="XML"  buttonType="danger" :userid="userid" :sceneid="sceneid"  />
-        <FileUploader fileType="SQL"  buttonType="success"  :userid="userid" :sceneid="sceneid" />
+        <FileUploader fileType="Excel"  buttonType="primary" :userid="userid" :sceneid="sceneid" @uploadSuccess="getTableData(true)"/>
+        <FileUploader fileType="JSON"  buttonType="warning" :userid="userid" :sceneid="sceneid"  @uploadSuccess="getTableData(true)"/>
+        <FileUploader fileType="XML"  buttonType="danger" :userid="userid" :sceneid="sceneid"  @uploadSuccess="getTableData(true)"/>
+        <FileUploader fileType="SQL"  buttonType="success"  :userid="userid" :sceneid="sceneid" @uploadSuccess="getTableData(true)"/>
 
 
         <el-link :underline="true" :href= url.downLoadExcel>
@@ -69,7 +69,7 @@
 import { defineComponent, ref, reactive } from 'vue'
 import Table from '@/components/table/index.vue'
 import { Page } from '@/components/table/type'
-import { getData, del } from '@/api/table'
+import {getGroupsByUserIdAndSceneId, del} from '@/api/group'
 // import Layer from './layer.vue'
 import { ElMessage } from 'element-plus'
 import type { LayerInterface } from '@/components/layer/index.vue'
@@ -110,6 +110,8 @@ export default defineComponent({
     const sceneid = store.state.user.sceneid
 
 
+
+
     const handleSelectionChange = (val: []) => {
       chooseData.value = val
     }
@@ -123,18 +125,19 @@ export default defineComponent({
       let params = {
         page: page.index,
         pageSize: page.size,
-
+        userid: userid,
+        sceneid: sceneid,
       }
-      getData(params)
+      getGroupsByUserIdAndSceneId(params)
       .then(res => {
         let data = res.data.list
-        if (Array.isArray(data)) {
-          data.forEach(d => {
-            const select = selectData.find(select => select.value === d.choose)
-            select ? d.chooseName = select.label : d.chooseName = d.choose
-            const radio = radioData.find(select => select.value === d.radio)
-            radio ? d.radioName = radio.label : d.radio
+        if(data.size === 0) {
+          ElMessage({
+            message: '暂无数据',
+            type: 'warning'
           })
+        }else{
+          store.commit('user/groupidChange', data[0].id)
         }
         tableData.value = res.data.list
         page.total = Number(res.data.pager.total)
@@ -151,7 +154,6 @@ export default defineComponent({
 
     const handleUse = (data: object) => {
       store.commit('user/groupidChange', data.id)
-      console.log(data.id)
       ElMessage.success('启用成功')
     }
 
