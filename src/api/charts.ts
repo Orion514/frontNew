@@ -14,10 +14,10 @@ export function getTreeChartData(){
 // 给定sceneid和dataid  获得一颗树的结果
 export function getResultTreeChartData(data:any){
     return request({
-        url: "/chart/tree/result",
+        url: "/result/tree/all",
         method: 'get',
         baseURL: '/mock',
-        params: data,
+        // params: data,
     })
 }
 

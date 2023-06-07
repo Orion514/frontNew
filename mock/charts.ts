@@ -396,7 +396,7 @@ export default [
         }
     },
     {
-        url: '/mock/chart/tree/result',
+        url: '/mock/result/tree/all',
         method: 'get',
         response: () => {
             return{
@@ -404,16 +404,16 @@ export default [
                 msg:{},
                 data: {
                     "name": "flare",
-                    "weight": 1,
+                    "value": 0.2,
                     "int": 33,
                     children: [
                         {
                             "name": "1",
-                            "weight": 1,
+                            "value": 0.5,
                             "int": 33,
                         },{
                             "name": "2",
-                            "weight": 1,
+                            "value": 0.5,
                             "int": 33,
                         }
                     ]

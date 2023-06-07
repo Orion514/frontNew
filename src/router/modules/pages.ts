@@ -24,11 +24,11 @@ const route: Route[] = [
         component: createNameComponent(() => import('@/views/main/pages/resultTable/index.vue')),
         meta: { title: 'message.menu.page.treeTable', cache: true }
       },
-      {
-        path: 'card',
-        component: createNameComponent(() => import('@/views/main/pages/card/index.vue')),
-        meta: { title: 'message.menu.page.card', cache: true }
-      },
+      // {
+      //   path: 'card',
+      //   component: createNameComponent(() => import('@/views/main/pages/card/index.vue')),
+      //   meta: { title: 'message.menu.page.card', cache: true }
+      // },
       // {
       //   path: 'work',
       //   component: createNameComponent(() => import('@/views/main/pages/work/index.vue')),

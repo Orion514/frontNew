@@ -36,16 +36,16 @@ export default [
         }
     },
     {
-        url: `/mock/data/getTable`,
+        url: `/mock/data/getTableCols`,
         method: 'get',
         response: ({ body }: { body: any }) => {
             return {
                 code: 200,
                 data: {
-                    [`list|${4}`]: [
+                    [`list|${10}`]: [
                         {
-                            'label|+1': ['id','name','weight','value'],
-                            'prop|+1': ['id','name','weight','value']
+                            'label|+1': ['index1','index2','index3','index4','index5','index6','index7','index8','index9','index10'],
+                            'prop|+1': ['index1','index2','index3','index4','index5','index6','index7','index8','index9','index10'],
                         },
                     ],
                     msg: ''

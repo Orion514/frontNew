@@ -3,8 +3,12 @@
     <div class="left">
       <category />
     </div>
-    <div class="content" >
-      <charts v-if="option" :option="option" class="chart" />
+    <div class="content"  >
+      <div class="layout-container">
+        <div class="chart">
+          <charts v-if="option" :option="option"  class="chart" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -35,12 +39,12 @@ export default defineComponent({
     const fetchData = async () => {
       try {
         const parms ={
-          dataid: active.value.id,
+          dataid: active.value.dataid,
           sceneid: store.state.user.sceneid,
         }
         const response = await getResultTreeChartData(parms);
         const data = response.data;
-        option.value = generateResultTreeOptions(data, active.value.id); // 更新 options 的值
+        option.value = generateResultTreeOptions(data, active.value.dataid); // 更新 options 的值
         ElMessage.success("切换数据成功,计算图如下");
       } catch (error) {
         console.log(error);
@@ -83,10 +87,18 @@ export default defineComponent({
     }
   }
   .chart {
-    width: 100%;
-    height: 100%;
+    width: calc(100% - 80px);
+    height: calc(100% - 80px);
     display: flex;
     justify-content: center;
     padding: 30px;
+  }
+  .box {
+    margin: 20px auto 0;
+    width: calc(100% - 40px);
+    height: 400px;
+    background: var(--system-page-background);
+    padding: 20px 20px 10px;
+    overflow: hidden;
   }
 </style>

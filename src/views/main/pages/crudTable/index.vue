@@ -49,14 +49,16 @@
 import { defineComponent, ref, reactive } from 'vue'
 import Table from '@/components/table/index.vue'
 import { Page } from '@/components/table/type'
-import { getData, del } from '@/api/table'
+import { del } from '@/api/table'
 import Layer from './layer.vue'
 import { ElMessage } from 'element-plus'
 import type { LayerInterface } from '@/components/layer/index.vue'
 import { selectData, radioData } from './enum'
 import { Plus, Search, Delete } from '@element-plus/icons'
 
-import {getTableCols} from "@/api/data";
+import {getTableCols,getDatas} from "@/api/data";
+import store from "@/store";
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'crudTable',
@@ -85,6 +87,7 @@ export default defineComponent({
     const tableData = ref([])
     const chooseData = ref([])
     let columns = ref([])
+    const store = useStore()
 
     const handleSelectionChange = (val: []) => {
       chooseData.value = val
@@ -97,9 +100,12 @@ export default defineComponent({
       if (init) {
         page.index = 1
       }
-      getTableCols()
+      let params = {
+        sceneid : store.state.user.sceneid
+      }
+      getTableCols(params)
         .then(res=>{
-          columns.value = res.data.list
+          columns.value = res.data
           console.log(columns.value)
       }).catch(error =>{
         console.log(error);
@@ -117,23 +123,26 @@ export default defineComponent({
       let params = {
         page: page.index,
         pageSize: page.size,
-        ...query
+        groupid: store.state.user.groupid,
       }
-      getData(params)
+      getDatas(params)
       .then(res => {
         let data = res.data.list
-        if (Array.isArray(data)) {
-          data.forEach(d => {
-            const select = selectData.find(select => select.value === d.choose)
-            select ? d.chooseName = select.label : d.chooseName = d.choose
-            const radio = radioData.find(select => select.value === d.radio)
-            radio ? d.radioName = radio.label : d.radio
-          })
-        }
-        tableData.value = res.data.list
+        // console.log(res)
+        // console.log(data)
+        // if (Array.isArray(data)) {
+        //   data.forEach(d => {
+        //     const select = selectData.find(select => select.value === d.choose)
+        //     select ? d.chooseName = select.label : d.chooseName = d.choose
+        //     const radio = radioData.find(select => select.value === d.radio)
+        //     radio ? d.radioName = radio.label : d.radio
+        //   })
+        // }
+        tableData.value = data
         page.total = Number(res.data.pager.total)
       })
       .catch(error => {
+        console.log(error)
         tableData.value = []
         page.index = 1
         page.total = 0

@@ -1,5 +1,6 @@
 <template>
   <div class="category">
+    <el-scrollbar>
     <div class="header-box">
       <h2>结果树结构</h2>
       <!-- <el-input
@@ -22,6 +23,7 @@
       >
       </el-tree>
     </div>
+    </el-scrollbar>
   </div>
 </template>
 
@@ -47,16 +49,15 @@ export default defineComponent({
     const store = useStore();
 
     const getTreeData = () => {
-      //todo, 数据是定死的
-      const params = {
-        groupid: 100,
-        sceneid: 1
-      }
 
-      // const params = {
-      //   groupid: store.state.user.groupid,
-      //   sceneid: store.state.user.sceneid
-      // };
+      // ElMessage.info('groupid' + store.state.user.groupid)
+      // console.log(store.state.user.groupid)
+      // ElMessage.info('sceneid' + store.state.user.sceneid)
+
+      const params = {
+        groupid: store.state.user.groupid,
+        sceneid: store.state.user.sceneid
+      };
 
       getTree(params).then((res) => {
         data.value = res.data.map((node) => {

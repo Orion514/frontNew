@@ -27,7 +27,7 @@ export function getDataIdsByGroupId(data){
     return request({
         url: '/result/getDataIds',
         method: 'get',
-        baseURL: '/mock',
+        // baseURL: '/mock',
         params: data
     })
 }

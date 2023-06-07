@@ -4,7 +4,7 @@
       <h2>分类列表</h2>
       <el-input
         v-model="input"
-        placeholder="请输入祖父/父亲结点指标名"
+        placeholder=""
         @input="searchData(true)"
       ></el-input>
     </div>
@@ -17,11 +17,11 @@
     >
       <li
         v-for="item in list"
-        :key="item.id"
-        :class="{ active: item.id === active.id }"
+        :key="item.dataid"
+        :class="{ active: item.dataid === active.dataid }"
         @click="changeActive(item)"
       >
-        <span>{{ item.name }}</span>
+        <span>{{ item.label }}</span>
       </li>
       <p class="load-tip" v-if="loading">加载中...</p>
       <p class="load-tip" v-if="nomore">数据加载完成</p>
@@ -77,10 +77,8 @@ export default defineComponent({
         } else {
           list.value = list.value.concat(res.data.list);
         }
-        console.log(res.data.list)
         page.index += 1;
-        // page.total = res.data.pager.total;
-        page.total = 1000
+        page.total = res.data.pager.total;
       })
       .catch((err) => {
         page.index = 1

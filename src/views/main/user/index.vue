@@ -118,7 +118,7 @@ export default defineComponent({
       let params = {
         page: page.index,
         pageSize: page.size,
-        ...query
+        // ...query
       }
       getUserList(params)
           .then(res => {

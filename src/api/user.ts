@@ -5,7 +5,7 @@ export function loginApi(data: object) {
   return request({
     url: '/user/login',
     method: 'post',
-    baseURL: '/mock',
+    // baseURL: '/mock',
     data
   })
 }
@@ -15,7 +15,7 @@ export function getInfoApi(data: object) {
   return request({
     url: '/user/info',
     method: 'post',
-    baseURL: '/mock',
+    // baseURL: '/mock',
     data
   })
 }
@@ -52,9 +52,10 @@ export function getMenuApi() {
 export function getUserList(data) {
   return request({
     url: '/user/list',
-    method: 'post',
+    method: 'get',
+    params: data,
     // baseURL: '/mock',
-    data
+    // data
   })
 }
 

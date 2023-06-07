@@ -12,7 +12,7 @@
 <script lang="ts">
 import type { LayerType } from '@/components/layer/index.vue'
 import {reactive, Ref } from 'vue'
-import type { ElFormItemContext } from 'element-plus/lib/el-form/src/token'
+// import type { ElFormItemContext } from 'element-plus/lib/el-form/src/token'
 import { defineComponent, ref } from 'vue'
 import { add, update } from '@/api/table'
 import { selectData, radioData } from './enum'
@@ -37,29 +37,34 @@ export default defineComponent({
       type: Array,
     },
   },
-  setup(props, ctx) {
-    const ruleForm: Ref<ElFormItemContext|null> = ref(null)
-    const layerDom: Ref<LayerType|null> = ref(null)
+  setup(props) {
+    // const ruleForm: Ref<ElFormItemContext|null> = ref(null)
+    // const layerDom: Ref<LayerType|null> = ref(null)
+
+    const ruleForm = ref(null)
+    const layerDom = ref(null)
+
 
     const form = ref({})
     const rules = ref([])
 
 
-    //根据columns 数组动态生成form和rules
-
+    // 根据columns 数组动态生成form和rules
     for (const column of props.columns) {
-      form.value[column.prop] = '';
+      // form.value[column.prop] = column.value;
       rules.value[column.prop] = [{
         required: true,
-        message: `请输入${column.label}`,
         trigger: 'blur',
         prop: column.prop,
         validator: (rule, value, callback) => {
           if (value === '') {
-            callback(new Error('请输入' + column.label));
+            callback(new Error('请输入 ' + column.label));
           } else {
-            if (Number(value) < 0 || Number(value) > 1) {
-              callback(new Error('请输入0-1之间的数字'));
+            const numericValue = Number(value)
+            if(isNaN(numericValue)){
+              callback(new Error('请输入数字'));
+            }else if (Number(value) < 0 ) {
+              callback(new Error('请输入自然数'));
             } else {
               callback();
             }
@@ -68,13 +73,13 @@ export default defineComponent({
       }]
     }
 
-    // 定义用于验证权重加和的方法
-    function validateWeightSum() {
-      const sum = Object.values(form.value).reduce((acc, val) => acc + Number(val), 0)
-      console.log('sum', sum)
-      return Math.abs(sum - 1) < 1e-5
-    }
-    rules.value.push({ validator: validateWeightSum, trigger: 'submit' })
+    // // 定义用于验证权重加和的方法
+    // function validateWeightSum() {
+    //   const sum = Object.values(form.value).reduce((acc, val) => acc + Number(val), 0)
+    //   console.log('sum', sum)
+    //   return Math.abs(sum - 1) < 1e-5
+    // }
+    // // rules.value.push({ validator: validateWeightSum, trigger: 'submit' })
 
     init()
     function init() { // 用于判断新增还是编辑功能
@@ -91,7 +96,7 @@ export default defineComponent({
       ruleForm,
       selectData,
       radioData,
-      validateWeightSum
+      // validateWeightSum
     }
   },
   methods: {
@@ -106,6 +111,7 @@ export default defineComponent({
               this.addForm(params)
             }
           } else {
+            console.log(this.form)
             ElMessage.error('表单有错')
           }
         });
@@ -125,6 +131,7 @@ export default defineComponent({
     },
     // 编辑提交事件
     updateForm(params: object) {
+      console.log('params', params)
       update(params)
       .then(res => {
         this.$message({

@@ -24,18 +24,18 @@ import Scene from "@/router/modules/scene";
 /** 登录后需要动态加入的本地路由 */
 const FrontRoutes: Route[] = [
   ...Dashboard,
-  ...Document,
+  // ...Document,
   ...Scene,
   ...DataConfig,
-  ...Optimize,
   ...Pages,
-  ...Menu,
-  ...Directive,
-  ...Chart,
-  ...SystemManage,
-  ...Print,
-  ...Community,
-  ...Tab,
+  ...Optimize,
+  // ...Menu,
+  // ...Directive,
+  // ...Chart,
+  // ...SystemManage,
+  // ...Print,
+  // ...Community,
+  // ...Tab,
   ...User,
 ]
 

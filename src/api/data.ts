@@ -2,10 +2,20 @@ import request from "@/utils/system/request";
 
 
 // 获得树的结构
-export function getTableCols(){
+export function getTableCols(data){
     return request({
-        url: '/data/getTable',
+        url: '/data/getTableCols',
         method: 'get',
-        baseURL: '/mock',
+        params: data,
+        // baseURL: '/mock',
+    })
+}
+
+export function getDatas(data){
+    return request({
+        url: '/data/getDatas',
+        method: 'get',
+        params: data,
+        // baseURL: '/mock',
     })
 }

@@ -1,14 +1,14 @@
 <template>
   <div class="full">
-    <el-card shadow="always">
-    <div class="left">
+
+    <div class="left scroll-container ">
         <category />
     </div>
-    </el-card>
 
-    <div class="content">
+    <div class="content " >
         <my-table />
     </div>
+
   </div>
 </template>
 
