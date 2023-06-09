@@ -17,18 +17,12 @@ const route: Route[] = [
         children: [
           {
             path: 'PCA',
-            component: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-1.vue')),
-            //meta: { title: 'message.menu.menu.menu_1' }
+            component: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/PCA/index.vue')),
             meta: { title: '主成分分析' }
           },
           {
-            path: 'low-2',
-            component: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-2.vue')),
-            meta: { title: '因子分析' }
-          },
-          {
-            path: 'low-3',
-            component: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-3.vue')),
+            path: 'KMeans',
+            component: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/KMeans/index.vue')),
             meta: { title: 'K-Means' }
           }
         ]
@@ -37,18 +31,18 @@ const route: Route[] = [
         path: 'merge',
         component: createNameComponent(() => import('@/components/menu/index.vue')),
         //meta: { title: 'message.menu.menu.menu_1' }
-        redirect: '/optimize/merge/merge-1',
+        redirect: '/optimize/merge/Spearman',
         meta: { title: '合并' },
         children: [
           {
-            path: 'merge-1',
-            component: createNameComponent(() => import('@/views/main/optimize/merge/merge-1.vue')),
+            path: 'Spearman',
+            component: createNameComponent(() => import('@/views/main/optimize/merge/Spearman/index.vue')),
             //meta: { title: 'message.menu.menu.menu_1' }
             meta: { title: 'Spearman' }
           },
           {
-            path: 'merge-2',
-            component: createNameComponent(() => import('@/views/main/optimize/merge/merge-2.vue')),
+            path: 'Pearson',
+            component: createNameComponent(() => import('@/views/main/optimize/merge/Pearson/index.vue')),
             meta: { title: 'Pearson' }
           }
         ]
@@ -62,7 +56,7 @@ const route: Route[] = [
         children: [
           {
             path: 'entropy',
-            component: createNameComponent(() => import('@/views/main/optimize/weight/entropy.vue')),
+            component: createNameComponent(() => import('@/views/main/optimize/weight/entropy/index.vue')),
             //meta: { title: 'message.menu.menu.menu_1' }
             meta: { title: '熵权法' }
           }

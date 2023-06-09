@@ -40,15 +40,13 @@ const document = {
 /** 优化管理 */
 const optimize = {
   /** 三级菜单1 */
-  low_1: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-1.vue')),
+  pca: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/PCA/index.vue')),
+  /** 三级菜单2*/
+  kmeans: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/KMeans/index.vue')),
   /** 三级菜单1 */
-  low_2: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-2.vue')),
+  spearman: createNameComponent(() => import('@/views/main/optimize/merge/Spearman/index.vue')),
   /** 三级菜单1 */
-  low_3: createNameComponent(() => import('@/views/main/optimize/dimension-lowering/low-3.vue')),
-  /** 三级菜单1 */
-  merge_1: createNameComponent(() => import('@/views/main/optimize/merge/merge-1.vue')),
-  /** 三级菜单1 */
-  merge_2: createNameComponent(() => import('@/views/main/optimize/merge/merge-2.vue')),
+  pearson: createNameComponent(() => import('@/views/main/optimize/merge/Pearson/index.vue')),
   /** 三级菜单1 */
   entropy: createNameComponent(() => import('@/views/main/optimize/weight/entropy.vue')),
 }
