@@ -7,15 +7,15 @@
         type="border-card"
     >
 
-      <el-tab-pane label="树形表格" name="table" class="content" >
-        <template v-if="activeName === 'table' ">
-          <keep-alive>
-            <treeTable/>
-          </keep-alive>
-        </template>
+<!--      <el-tab-pane label="树形表格" name="table" class="content" >-->
+<!--        <template v-if="activeName === 'table' ">-->
+<!--          <keep-alive>-->
+<!--            <treeTable/>-->
+<!--          </keep-alive>-->
+<!--        </template>-->
 
 
-      </el-tab-pane>
+<!--      </el-tab-pane>-->
 
       <el-tab-pane label="树形图" name="graph" class="content" >
         <template v-if="activeName === 'graph' ">

@@ -67,7 +67,12 @@ export function generateResultTreeOptions(data,dataIdName) {
         },
         tooltip: {
             trigger: 'item',
-            triggerOn: 'mousemove'
+            formatter: function (params) {
+                return '<div style="text-align: left;"><b>名称：</b>' + params.name + '<br>' +
+                    '<b>权重：</b>' + params.value + '<br>' +
+                    '<b>数值：</b>' + params.data.weight + '</div>';
+            },
+
         },
         toolbox: {
             show: true,
@@ -82,22 +87,27 @@ export function generateResultTreeOptions(data,dataIdName) {
             {
                 type: 'tree',
                 data: [data],
-                top: '1%',
                 left: '7%',
-                bottom: '1%',
                 right: '20%',
                 symbolSize: 10,
                 label: {
-                    position: 'left',
+                    position: 'bottom',
                     verticalAlign: 'middle',
-                    align: 'right',
-                    fontSize: 15
+                    offset: [0, 10], // 调整垂直方向上的偏移量
+                    fontSize: 15,
+                    formatter: function (params) {
+                        return params.name + '\n' + '【' + params.value + '】'
+                    },
                 },
                 leaves: {
                     label: {
                         position: 'right',
                         verticalAlign: 'middle',
-                        align: 'left'
+                        align: 'left',
+                        offset: [0,0],
+                        formatter: function (params) {
+                            return params.name + '【' + params.value + '】'
+                        },
                     }
                 },
                 emphasis: {
@@ -106,6 +116,7 @@ export function generateResultTreeOptions(data,dataIdName) {
                 expandAndCollapse: true,
                 animationDuration: 550,
                 animationDurationUpdate: 750,
+                initialTreeDepth: 9999 // 设置一个较大的值，确保所有节点都展开
             }
         ]
     }

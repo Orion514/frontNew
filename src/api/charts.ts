@@ -16,8 +16,8 @@ export function getResultTreeChartData(data:any){
     return request({
         url: "/result/tree/all",
         method: 'get',
-        baseURL: '/mock',
-        // params: data,
+        // baseURL: '/mock',
+        params: data,
     })
 }
 

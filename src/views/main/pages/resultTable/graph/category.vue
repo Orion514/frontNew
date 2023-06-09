@@ -1,12 +1,13 @@
 <template>
   <div class="category">
     <div class="header-box">
-      <h2>分类列表</h2>
-      <el-input
-        v-model="input"
-        placeholder=""
-        @input="searchData(true)"
-      ></el-input>
+      <h2>结果计算图列表</h2>
+<!--   todo,序号直达-->
+<!--      <el-input-->
+<!--        v-model="input"-->
+<!--        placeholder="输入序号直达数据"-->
+<!--        @input="goToIndex"-->
+<!--      ></el-input>-->
     </div>
     <ul
       class="list system-scrollbar"
@@ -35,6 +36,7 @@ import { defineComponent, ref, inject } from "vue";
 import { getDataIdsByGroupId} from "@/api/result.ts"
 import { debounce } from "throttle-debounce";
 import {useStore} from "vuex";
+import {ElMessage} from "element-plus";
 export default defineComponent({
   setup() {
     const listDom: Ref<HTMLElement | null> = ref(null);
@@ -95,6 +97,17 @@ export default defineComponent({
     }
     getCategoryData(true);
 
+    const goToIndex = function () {
+      // 根据输入框的值定位到特定的数据项
+      if (this.input && this.input.value >= 1 && this.input.value <= this.list.length) {
+        const index = this.input - 1; // 索引从 0 开始，所以需要减 1
+        const targetElement = this.$refs.listDom.children[index];
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }
+
     return {
       listDom,
       loading,
@@ -104,7 +117,8 @@ export default defineComponent({
       active,
       getCategoryData,
       searchData,
-      changeActive
+      changeActive,
+      goToIndex
     };
   },
 });

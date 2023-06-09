@@ -3,11 +3,14 @@
     <div class="left">
       <category />
     </div>
+
     <div class="content"  >
       <div class="layout-container">
-        <div class="chart">
-          <charts v-if="option" :option="option"  class="chart" />
-        </div>
+        <el-card>
+          <div class="chart" style="height: 700px; " v-loading = "loading">
+            <charts v-if="option" :option="option"  class="chart" />
+          </div>
+        </el-card>
       </div>
     </div>
   </div>
@@ -34,10 +37,12 @@ export default defineComponent({
 
     const option = ref({})
     const store = useStore()
+    const loading = ref(true)
 
     // 得到数据
     const fetchData = async () => {
       try {
+        loading.value = true
         const parms ={
           dataid: active.value.dataid,
           sceneid: store.state.user.sceneid,
@@ -48,16 +53,19 @@ export default defineComponent({
         ElMessage.success("切换数据成功,计算图如下");
       } catch (error) {
         console.log(error);
+      } finally {
+        loading.value = false
       }
     };
-    fetchData()
+    // fetchData()
 
     watch(active, (newVal) => {
       fetchData()
     })
 
     return{
-      option
+      option,
+      loading
     }
   }
 
