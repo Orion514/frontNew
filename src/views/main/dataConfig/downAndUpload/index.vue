@@ -131,13 +131,15 @@ export default defineComponent({
       getGroupsByUserIdAndSceneId(params)
       .then(res => {
         let data = res.data.list
-        if(data.size === 0) {
+        if(data.size === 0 ) {
           ElMessage({
             message: '暂无数据',
             type: 'warning'
           })
         }else{
-          store.commit('user/groupidChange', data[0].id)
+          if(store.state.user.groupid === -1){
+            store.commit('user/groupidChange', data[0].id)
+          }
         }
         tableData.value = res.data.list
         page.total = Number(res.data.pager.total)

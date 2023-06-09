@@ -138,6 +138,7 @@ export default defineComponent({
         //     radio ? d.radioName = radio.label : d.radio
         //   })
         // }
+        ElMessage.success("当前组【" + store.state.user.groupid + "】 的数据如下")
         tableData.value = data
         page.total = Number(res.data.pager.total)
       })

@@ -66,7 +66,7 @@ const actions = {
       loginApi(params)
       .then(res => {
         commit('tokenChange', res.data.token)
-        commit('groupidChange', 1)
+        commit('groupidChange', -1)
         commit('sceneidChange', 1)
         dispatch('getInfo', { token: res.data.token })
         .then(infoRes => {
