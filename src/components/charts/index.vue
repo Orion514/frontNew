@@ -23,7 +23,7 @@ onMounted(() => {
     let option: any = props.option
     // 需要在页面Dom元素加载后再初始化echarts对象
     let myChart = echarts.init(dom)
-    myChart.setOption(option)
+    myChart.setOption(option,true)
     // 自动监听加自动销毁
     useEventListener('resize', () => myChart.resize())
     watch(() => props.option, (newVal: any) => {

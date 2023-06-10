@@ -8,7 +8,7 @@
 <!--          </template>-->
 <!--        </el-popconfirm>-->
 
-        <FileUploader fileType="JSON"  buttonType="primary" :userid="userid"  @uploadSuccess="fetchData()"/>
+        <FileUploader fileType="JSON"  buttonType="primary" :userid="userid"  @uploadSuccess="getIndexTrees()"/>
 
         <el-link :underline="true" :href= url.downloadJSON>
           <el-button type = 'warning'  :icon="Download" style="margin: 0 5px 0 5px" >{{ $t('message.common.downLoadJSON') }}</el-button>
@@ -33,9 +33,38 @@
 
     </div>
     <div class="indexTree">
-      <div class="chart" style="height: 800px; margin-top:20px;">
-        <charts v-if="options" :option="options"  />
-      </div>
+
+        <el-tabs
+            v-model="activateName"
+            @tab-click="handleClick"
+            class="demo-tabs "
+            type="border-card"
+        >
+          <el-tab-pane label="树型图" name="tree" >
+<!--            <keep-alive>-->
+<!--              <template v-if="activateName === 'tree' ">-->
+                <div class="chart" style="height: 800px;  margin-top:20px;">
+                  <charts  v-if="activateName === 'tree'" :option="options"  ref="chart1" />
+                </div>
+<!--              </template>-->
+<!--            </keep-alive>-->
+          </el-tab-pane>
+
+          <el-tab-pane label="旭日图" name="sun" >
+<!--            <keep-alive>-->
+<!--            <template v-if="activateName === 'sun' ">-->
+
+                <div class="chart" style="height: 800px; margin-top:20px;">
+                  <charts v-if="activateName === 'sun'" :option="option2"  ref="chart2" />
+                </div>
+
+<!--            </template>-->
+<!--            </keep-alive>-->
+          </el-tab-pane>
+
+
+        </el-tabs>
+
     </div>
 
 <!--    <div class="layout-container-table half" >-->
@@ -81,12 +110,14 @@ import {useStore} from 'vuex'
 import {userState} from "@/store/modules/user";
 import charts from "@/components/charts/index.vue";
 import {getTreeChartData} from "@/api/charts";
-import {generateTreeStructureOptions} from "@/views/main/echarts/options/tree";
+import {generateSunOptions, generateTreeStructureOptions} from "@/views/main/echarts/options/tree";
 import {deleteScene, getIndexTree} from "@/api/indexTree";
+import graph from "@/views/main/pages/resultTable/graph/index.vue";
 
 export default defineComponent({
   name: 'upload',
   components: {
+    graph,
     charts,
     FileUploader,
     Table
@@ -99,6 +130,7 @@ export default defineComponent({
       store.commit('user/sceneidChange',1)
     }
     const options = ref({})
+    const option2 = ref({})
 
     const url = reactive({
       downloadJSON: 'https://sedesign.oss-cn-beijing.aliyuncs.com/%E6%A8%A1%E6%9D%BF/indexTree%E6%A8%A1%E6%9D%BF.json',
@@ -118,6 +150,17 @@ export default defineComponent({
     const sceneid = store.state.user.sceneid
 
     value.value = store.state.user.sceneid
+
+
+    const activateName = ref('tree')
+    const handleClick = () => {
+      this.$nextTick(() =>{
+        echarts.getInstanceByDom(this.$refs.chart1).resize()
+        echarts.getInstanceByDom(this.$refs.chart2).resize()
+      })
+    }
+
+
 
 
     // 获取所有的指标体系数据
@@ -155,10 +198,18 @@ export default defineComponent({
         const response = await getTreeChartData(params);
         const data = response.data;
 
-        const processedData = processTree(response.data);
+        let option1Data = processTree(data);
 
-        console.log(processedData)
-        options.value = generateTreeStructureOptions(processedData); // 更新 options 的值
+        let option2Data = flattenTree(option1Data);
+
+        colorList(option2Data)
+
+        options.value = generateTreeStructureOptions(option1Data); // 更新 options 的值
+
+        option2.value = generateSunOptions(option2Data);  // 更新option2的值
+        console.log('options', options)
+        console.log('option2', option2)
+
         ElMessage.success("切换成功，指标体系树如下");
       } catch (error) {
         console.log(error);
@@ -166,6 +217,37 @@ export default defineComponent({
     };
     getIndexTrees()
     fetchData()
+
+
+    function flattenTree(obj) {
+      const result = [];
+      for (const child of obj.children) {
+        const node = { ...child };
+        result.push(node);
+      }
+      return result;
+    }
+
+    function colorList(list){
+      for(const node of list){
+        node.itemStyle = {
+          color: getRandomColor()
+        }
+        if(node.children && node.children.length > 0){
+          colorList(node.children)
+        }
+      }
+    }
+
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
 
     function processTree(node) {
       // 对当前节点进行处理
@@ -185,7 +267,6 @@ export default defineComponent({
 
       return processedNode;
     }
-
 
 
 
@@ -267,7 +348,9 @@ export default defineComponent({
       Search,
       Delete,
       Download,
+      activateName,
       options,
+      option2,
       scenes,
       value,
       tableData,
@@ -285,6 +368,8 @@ export default defineComponent({
       getTableData,
       handleUse,
       isButtonDisabled,
+      getIndexTrees,
+      handleClick,
     }
   }
 })
@@ -294,4 +379,15 @@ export default defineComponent({
 .half{
   width: 45%;
 }
+.indexTree{
+  weight: 100%;
+  margin-top: 20px;
+}
+.chart{
+  width: 100%;
+  height: 100%;
+  min-width: 200px; /* 设置最小宽度 */
+  min-height: 200px; /* 设置最小高度 */
+}
+
 </style>

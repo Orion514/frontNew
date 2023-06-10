@@ -16,7 +16,6 @@ import type { LayerType } from '@/components/layer/index.vue'
 import type { Ref } from 'vue'
 import { defineComponent, ref } from 'vue'
 import { add, update } from '@/api/table'
-import { selectData, radioData } from './enum'
 import Layer from '@/components/layer/index.vue'
 export default defineComponent({
   components: {

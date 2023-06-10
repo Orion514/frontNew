@@ -63,6 +63,44 @@ export function generateTreeStructureOptions(data: any) {
 }
 
 
+export function generateSunOptions(data){
+    const options ={
+        title: {
+            text: '指标体系树结构',
+            left: 'center'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                mark: { show: true },
+                dataView: { show: true, readOnly: false },
+                // restore: { show: true },
+                saveAsImage: { show: true }
+            }
+        },
+        series: {
+            top: '1%',
+            left: '7%',
+            bottom: '1%',
+            right: '20%',
+            type: 'sunburst',
+            emphasis: {
+                focus: 'ancestor'
+            },
+            data: data,
+            radius: [0, '90%'],
+            label: {
+                rotate: 'radial',
+                formatter: '{b}\n【{c}】' // Display both name and value
+            },
+
+        }
+    }
+
+    return options;
+}
+
+
 //返回单科子树的options
 export function generateResultTreeOptions(data,dataIdName) {
     const options = {

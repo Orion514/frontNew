@@ -9,7 +9,6 @@
         :showSelection="false"
         :data="tableData"
         @getTableData="getTableData"
-        @selection-change="handleSelectionChange"
       >
         <el-table-column prop="name" label="指标名" align="center" />
         <el-table-column prop="weight" label="指标权重" align="center" />
@@ -46,6 +45,8 @@ export default defineComponent({
     const loading = ref(true)
     const tableData = ref([])
     const store = useStore()
+
+
 
     // 获取表格数据
     // params <init> Boolean ，默认为false，用于判断是否需要初始化分页

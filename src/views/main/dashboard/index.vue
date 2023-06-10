@@ -1,7 +1,7 @@
 <template>
   <div class="box">
     <el-card>
-      <el-image :src="url"/>
+      <el-image :src="imgUrl"/>
     </el-card>
 
 <!--    <basic-template />-->
@@ -24,11 +24,13 @@ export default defineComponent({
     basicTemplate,
     Communication,
   },
-  data(){
-    return {
-      url: 'https://sedesign.oss-cn-beijing.aliyuncs.com/%E6%A8%A1%E6%9D%BF/%E9%A6%96%E9%A1%B5.jpg'
+  setup(){
+    let imgUrl = 'https://sedesign.oss-cn-beijing.aliyuncs.com/%E6%A8%A1%E6%9D%BF/%E9%A6%96%E9%A1%B5.jpg'
+
+    return{
+      imgUrl,
     }
-  }
+  },
 })
 </script>
 

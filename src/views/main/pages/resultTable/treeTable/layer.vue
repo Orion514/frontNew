@@ -17,7 +17,6 @@ import type { Ref } from 'vue'
 import type { ElFormItemContext } from 'element-plus/lib/el-form/src/token'
 import { defineComponent, ref } from 'vue'
 import { add, update } from '@/api/table'
-import { selectData, radioData } from './enum'
 import Layer from '@/components/layer/index.vue'
 export default defineComponent({
   components: {
@@ -61,8 +60,6 @@ export default defineComponent({
       rules,
       layerDom,
       ruleForm,
-      selectData,
-      radioData
     }
   },
   methods: {
