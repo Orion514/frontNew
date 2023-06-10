@@ -1,9 +1,13 @@
 <template>
   <div class="box">
-    <basic-template />
-    <Card />
-    <Charts />
-    <Communication />
+    <el-card>
+      <el-image :src="url"/>
+    </el-card>
+
+<!--    <basic-template />-->
+<!--    <Card />-->
+<!--    <Charts />-->
+<!--    <Communication />-->
   </div>
 </template>
 
@@ -19,6 +23,11 @@ export default defineComponent({
     Charts,
     basicTemplate,
     Communication,
+  },
+  data(){
+    return {
+      url: 'https://sedesign.oss-cn-beijing.aliyuncs.com/%E6%A8%A1%E6%9D%BF/%E9%A6%96%E9%A1%B5.jpg'
+    }
   }
 })
 </script>

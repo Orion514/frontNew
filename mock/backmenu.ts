@@ -207,7 +207,7 @@ export default [
                 {
                   "path": "treeTable",
                   "meta": {
-                    "title": "树联动表格",
+                    "title": "运算子功能",
                     "cache": true
                   },
                   "component": "pages_treeTable"

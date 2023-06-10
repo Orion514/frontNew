@@ -74,8 +74,8 @@ export function generateResultTreeOptions(data,dataIdName) {
             trigger: 'item',
             formatter: function (params) {
                 return '<div style="text-align: left;"><b>名称：</b>' + params.name + '<br>' +
-                    '<b>权重：</b>' + params.value + '<br>' +
-                    '<b>数值：</b>' + params.data.weight + '</div>';
+                    '<b>权重：</b>' + params.data.weight + '<br>' +
+                    '<b>数值：</b>' + params.value + '</div>';
             },
 
         },

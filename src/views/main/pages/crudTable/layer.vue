@@ -2,7 +2,7 @@
   <Layer :layer="layer" @confirm="submit" ref="layerDom">
     <el-form  :model="form" :rules="rules" ref="ruleForm" label-width="120px" style="margin-right:30px;">
       <el-form-item  v-for="column in columns" :key="column.prop" :label="column.label" :prop="column.prop" >
-        <el-input  v-model="form[column.prop]" placeholder="请输入相应权重"></el-input>
+        <el-input  v-model="form[column.prop]" placeholder="请输入相应数值"></el-input>
       </el-form-item>
 
     </el-form>
@@ -11,14 +11,13 @@
 
 <script lang="ts">
 import type { LayerType } from '@/components/layer/index.vue'
-import {reactive, Ref } from 'vue'
-// import type { ElFormItemContext } from 'element-plus/lib/el-form/src/token'
+
 import { defineComponent, ref } from 'vue'
 import { add, update } from '@/api/table'
 import { selectData, radioData } from './enum'
 import Layer from '@/components/layer/index.vue'
 import {ElMessage} from "element-plus";
-import {updateData} from "@/api/data";
+import {addData, updateData} from "@/api/data";
 import {useStore} from "vuex";
 export default defineComponent({
   components: {
@@ -131,14 +130,13 @@ export default defineComponent({
             }
           } catch (error) {
             console.log(error)
-            ElMessage.error('@')
           }
         });
       }
     },
     // 新增提交事件
     addForm(params: object) {
-      add(params)
+      addData(params)
       .then(res => {
         this.$message({
           type: 'success',

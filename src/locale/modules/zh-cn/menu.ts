@@ -29,9 +29,9 @@ export default {
     },
     page: {
       name: '列表子功能',
-      crudTable: '列表',
+      crudTable: '数据展示',
       categoryTable: '分类列表',
-      treeTable: '树联动列表',
+      treeTable: '运算子功能',
       card: '指标卡片',
       work: '工作进度',
       baidu: '外部链接',

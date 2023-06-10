@@ -35,3 +35,12 @@ export function updateData(data){
         data,
     })
 }
+
+export function addData(data: object) {
+    return request({
+        url: '/data/add',
+        method: 'post',
+        // baseURL: '/mock',
+        data
+    })
+}
