@@ -19,3 +19,11 @@ export function getDatas(data){
         // baseURL: '/mock',
     })
 }
+
+export function deleteDatas(data){
+    return request({
+        url: "/data/deletedata",
+        method: "delete",
+        params: data,
+    })
+}

@@ -11,9 +11,9 @@ export function getGroupsByUserIdAndSceneId(data){
 
 export function del(data){
     return request({
-        url: '/group/del',
+        url: '/group/deleteGroup',
         method: 'get',
-        baseURL: '/mock',
+        // baseURL: '/mock',
         params: data
     })
 }

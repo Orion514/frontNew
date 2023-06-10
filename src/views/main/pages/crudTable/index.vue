@@ -56,7 +56,7 @@ import type { LayerInterface } from '@/components/layer/index.vue'
 import { selectData, radioData } from './enum'
 import { Plus, Search, Delete } from '@element-plus/icons'
 
-import {getTableCols,getDatas} from "@/api/data";
+import {getTableCols,getDatas, deleteDatas} from "@/api/data";
 import store from "@/store";
 import { useStore } from 'vuex'
 
@@ -153,13 +153,14 @@ export default defineComponent({
       })
     }
     // 删除功能
-    const handleDel = (data: object[]) => {
+    const handleDel = (data) => {
       let params = {
-        ids: data.map((e:any)=> {
+        ids: data.map((e)=> {
           return e.id
-        }).join(',')
+        }).join(','),
+        sceneid: store.state.user.sceneid,
       }
-      del(params)
+      deleteDatas(params)
       .then(res => {
         ElMessage({
           type: 'success',

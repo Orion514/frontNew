@@ -54,8 +54,8 @@ export function update(data: object) {
 export function del(data: object) {
   return request({
     url: '/table/del',
-    method: 'post',
-    baseURL: '/mock',
+    method: 'get',
+    // baseURL: '/mock',
     data
   })
 }
