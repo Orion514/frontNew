@@ -12,7 +12,8 @@ const dashboard = {
 
 const scene = {
   /** 场景切换 */
-  elder: createNameComponent(() => import('@/views/main/scene/elder.vue')),
+  manage: createNameComponent(() => import('@/views/main/scene/manage/index.vue')),
+  // elder: createNameComponent(() => import('@/views/main/scene/elder.vue')),
   test: createNameComponent(() => import('@/views/main/scene/test.vue')),
 }
 

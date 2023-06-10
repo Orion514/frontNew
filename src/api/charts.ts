@@ -2,13 +2,15 @@ import request from "@/utils/system/request";
 
 
 // 获得树的结构
-export function getTreeChartData(){
+export function getTreeChartData(data){
     return request({
-        url: "/chart/tree/structure",
+        url: "/result/TreeSceneDisplay",
         method: 'get',
-        baseURL: '/mock',
+        // baseURL: '/mock',
+        params: data
     })
 }
+
 
 
 // 给定sceneid和dataid  获得一颗树的结果

@@ -4,10 +4,10 @@ import getData from "@/views/main/echarts/options/dynamicData.json";
 
 
 // 返回体系树结构图的options
-export function generateTreeOptions(data: any) {
+export function generateTreeStructureOptions(data: any) {
     const options = {
         title: {
-            text: '中国老年人健康指标体系结构图',
+            text: '指标体系树结构',
             left: 'center'
         },
         tooltip: {
@@ -51,6 +51,7 @@ export function generateTreeOptions(data: any) {
                 expandAndCollapse: true,
                 animationDuration: 550,
                 animationDurationUpdate: 750,
+                initialTreeDepth: 9999 // 设置一个较大的值，确保所有节点都展开
             }
         ]
     }
@@ -88,7 +89,7 @@ export function generateResultTreeOptions(data,dataIdName) {
                 type: 'tree',
                 data: [data],
                 left: '7%',
-                right: '20%',
+                right: '25%',
                 symbolSize: 10,
                 label: {
                     position: 'bottom',

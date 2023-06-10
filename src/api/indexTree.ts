@@ -1,17 +1,19 @@
 import request from "@/utils/system/request";
 
-export function getGroupsByUserIdAndSceneId(data){
+export function getIndexTree(data){
     return request({
-        url: '/group/getGroups',
+        url: '/indextree/getIndexTrees',
         method: 'get',
         // baseURL: '/mock',
         params: data
     })
 }
 
-export function del(data){
+
+// 删除指标体系树
+export function deleteScene(data){
     return request({
-        url: '/group/del',
+        url: '/indextree/del',
         method: 'get',
         baseURL: '/mock',
         params: data
