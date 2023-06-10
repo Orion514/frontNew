@@ -95,7 +95,9 @@ export default defineComponent({
     const value = ref('')
     const scenes = ref([])
     const store = useStore()
-    store.commit('user/sceneidChange',1)
+    if(store.state.user.sceneid == -1){
+      store.commit('user/sceneidChange',1)
+    }
     const options = ref({})
 
     const url = reactive({
@@ -126,7 +128,6 @@ export default defineComponent({
         }
         const res = await getIndexTree(params);
         scenes.value = res.data;
-        ElMessage.success("得到指标体系树");
       }catch (error){
         console.log(error)
         ElMessage.error(error);

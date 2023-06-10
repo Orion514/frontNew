@@ -13,9 +13,9 @@ export function getIndexTree(data){
 // 删除指标体系树
 export function deleteScene(data){
     return request({
-        url: '/indextree/del',
+        url: '/indextree/delete',
         method: 'get',
-        baseURL: '/mock',
+        // baseURL: '/mock',
         params: data
     })
 }
