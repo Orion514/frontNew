@@ -18,6 +18,8 @@ import { add, update } from '@/api/table'
 import { selectData, radioData } from './enum'
 import Layer from '@/components/layer/index.vue'
 import {ElMessage} from "element-plus";
+import {updateData} from "@/api/data";
+import {useStore} from "vuex";
 export default defineComponent({
   components: {
     Layer
@@ -103,16 +105,33 @@ export default defineComponent({
     submit() {
       if (this.ruleForm) {
         this.ruleForm.validate((valid) => {
-          if (valid) {
-            let params = this.form
-            if (this.layer.row) {
-              this.updateForm(params)
+          try{
+            if (valid) {
+              const store = this.$store
+              // 将form按序提取出名称和值两个list
+              let nameList = Object.keys(this.form);
+              let valueList = nameList.map(name => this.form[name]);
+
+              let params = {
+                dataid: this.layer.row ? this.layer.row.id : '',
+                sceneid: store.state.user.sceneid,
+                fieldnames: nameList,
+                fieldvalues: valueList.map(value => parseFloat(value))
+              }
+
+              // let params = this.form
+              if (this.layer.row) {
+                this.updateForm(params)
+              } else {
+                this.addForm(params)
+              }
             } else {
-              this.addForm(params)
+              console.log(this.form)
+              ElMessage.error('表单有错')
             }
-          } else {
-            console.log(this.form)
-            ElMessage.error('表单有错')
+          } catch (error) {
+            console.log(error)
+            ElMessage.error('@')
           }
         });
       }
@@ -132,7 +151,7 @@ export default defineComponent({
     // 编辑提交事件
     updateForm(params: object) {
       console.log('params', params)
-      update(params)
+      updateData(params)
       .then(res => {
         this.$message({
           type: 'success',

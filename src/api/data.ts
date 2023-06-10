@@ -27,3 +27,11 @@ export function deleteDatas(data){
         params: data,
     })
 }
+
+export function updateData(data){
+    return request({
+        url: "/data/updatedata",
+        method: "post",
+        data,
+    })
+}
