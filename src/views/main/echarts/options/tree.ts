@@ -12,7 +12,11 @@ export function generateTreeStructureOptions(data: any) {
         },
         tooltip: {
             trigger: 'item',
-            triggerOn: 'mousemove'
+            triggerOn: 'mousemove',
+            formatter: function (params) {
+                return '<div style="text-align: left;"><b>名称：</b>' + params.name + '<br>' +
+                    '<b>权重：</b>' + params.data.value + '<br>' ;
+            },
         },
         toolbox: {
             show: true,

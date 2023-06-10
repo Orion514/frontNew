@@ -154,7 +154,11 @@ export default defineComponent({
         }
         const response = await getTreeChartData(params);
         const data = response.data;
-        options.value = generateTreeStructureOptions(data); // 更新 options 的值
+
+        const processedData = processTree(response.data);
+
+        console.log(processedData)
+        options.value = generateTreeStructureOptions(processedData); // 更新 options 的值
         ElMessage.success("切换成功，指标体系树如下");
       } catch (error) {
         console.log(error);
@@ -162,6 +166,27 @@ export default defineComponent({
     };
     getIndexTrees()
     fetchData()
+
+    function processTree(node) {
+      // 对当前节点进行处理
+      let processedNode = {
+        name: node.name,
+        value: node.weight,
+        children: []
+      };
+
+      // 递归处理子节点
+      if (node.children && node.children.length > 0) {
+        node.children.forEach(child => {
+          let processedChild = processTree(child);
+          processedNode.children.push(processedChild);
+        });
+      }
+
+      return processedNode;
+    }
+
+
 
 
     const handleDelScene =  async () => {
