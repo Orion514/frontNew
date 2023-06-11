@@ -137,19 +137,6 @@ const directive = {
   clickOutside: createNameComponent(() => import('@/views/main/directive/clickOutside.vue')),
 }
 
-/** echarts图表 */
-const echarts = {
-  /** 柱状图 */
-  bar: createNameComponent(() => import('@/views/main/echarts/bar.vue')),
-  /** 折线图 */
-  line: createNameComponent(() => import('@/views/main/echarts/line.vue')),
-  /** 饼图 */
-  pie: createNameComponent(() => import('@/views/main/echarts/pie.vue')),
-  /** 雷达图 */
-  radar: createNameComponent(() => import('@/views/main/echarts/radar.vue')),
-  /** 地图 */
-  map: createNameComponent(() => import('@/views/main/echarts/map.vue')),
-}
 
 /** 系统管理 */
 const systemManage = {
@@ -197,7 +184,6 @@ const allRoutes = {
   pages,
   menu,
   directive,
-  echarts,
   systemManage,
   print,
   community,
