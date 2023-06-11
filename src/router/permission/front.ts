@@ -7,8 +7,16 @@ import type { Route } from '../index.type'
 
 /** 引入需要权限的Modules */
 import Dashboard from '../modules/dashboard'
+import Document from '../modules/document'
 import Pages from '../modules/pages'
+import Menu from '../modules/menu'
 import Optimize from '../modules/optimize'
+import Directive from '../modules/direct'
+import SystemManage from '../modules/systemManage'
+import Chart from '../modules/chart'
+import Print from '../modules/print'
+import Community from '../modules/community'
+import Tab from '../modules/tab'
 import DataConfig from "@/router/modules/dataConfig";
 import User from "@/router/modules/user";
 import Scene from "@/router/modules/scene";
@@ -16,10 +24,18 @@ import Scene from "@/router/modules/scene";
 /** 登录后需要动态加入的本地路由 */
 const FrontRoutes: Route[] = [
   ...Dashboard,
+  // ...Document,
   ...Scene,
   ...DataConfig,
   ...Pages,
   ...Optimize,
+  // ...Menu,
+  // ...Directive,
+  // ...Chart,
+  // ...SystemManage,
+  // ...Print,
+  // ...Community,
+  // ...Tab,
   ...User,
 ]
 
