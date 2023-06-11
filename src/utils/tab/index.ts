@@ -1,7 +1,4 @@
-/*
- * @Date: 2022-09-25 20:05:01
- * @Description: tab面板的操作方法
- */
+
 
 /** 关闭当前标签 */
 export const closeCurrentTab = (nextPath?: string) => {

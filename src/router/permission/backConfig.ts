@@ -1,7 +1,4 @@
-/*
- * @Date: 2023-03-10 19:34:30
- * @Description:
- */
+
 import { createNameComponent } from '../createNode';
 
 /** 首页系列 */

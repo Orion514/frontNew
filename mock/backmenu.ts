@@ -1,7 +1,4 @@
-/*
- * @Date: 2023-03-10 19:57:44
- * @Description:
- */
+
 import { MockMethod } from 'vite-plugin-mock'
 
 export default [
