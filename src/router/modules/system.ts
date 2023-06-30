@@ -40,6 +40,12 @@ const route: Route[] = [
     meta:{ title: '注册', hideTabs: true }
   },
   {
+    path: '/findPswd',
+    component: createNameComponent(() => import('@/views/system/findPswd.vue')),
+    hideMenu: true,
+    meta:{ title: '找回密码', hideTabs: true }
+  },
+  {
     // 找不到路由重定向到404页面
     path: "/:pathMatch(.*)",
     component: Layout,

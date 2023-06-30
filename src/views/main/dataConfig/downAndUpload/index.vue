@@ -55,7 +55,7 @@
             <el-button @click="handleUse(scope.row)" type="success" :disabled="isButtonDisabled(scope.row)">{{ $t('message.common.use') }}</el-button>
             <el-popconfirm :title="$t('message.common.delTip')" @confirm="handleDel([scope.row])">
               <template #reference>
-                <el-button type="danger">{{ $t('message.common.del') }}</el-button>
+                <el-button type="danger" :disabled="chooseData.length">{{ $t('message.common.del') }}</el-button>
               </template>
             </el-popconfirm>
           </template>
@@ -128,11 +128,12 @@ export default defineComponent({
       getGroupsByUserIdAndSceneId(params)
       .then(res => {
         let data = res.data.list
-        if(data.size === 0 ) {
+        if(data.length === 0 ) {
           ElMessage({
-            message: '暂无数据',
-            type: 'warning'
+            message: '暂无数据,请先上传数据',
+            type: 'error'
           })
+          store.commit('user/groupidChange', -1)
         }else{
           if(store.state.user.groupid === -1){
             store.commit('user/groupidChange', data[0].id)

@@ -34,7 +34,7 @@
             <el-button @click="handleEdit(scope.row)">{{ $t('message.common.update') }}</el-button>
             <el-popconfirm :title="$t('message.common.delTip')" @confirm="handleDel([scope.row])">
               <template #reference>
-                <el-button type="danger">{{ $t('message.common.del') }}</el-button>
+                <el-button type="danger" :disabled="chooseData.length">{{ $t('message.common.del') }}</el-button>
               </template>
             </el-popconfirm>
           </template>

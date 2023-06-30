@@ -22,8 +22,9 @@ export interface userState {
 const state = (): userState => ({
   token: '', // 登录token
   info: {},  // 用户信息
-  groupid: 0, // 上传数据组id
-  sceneid: 1, // 场景id
+  groupid: -1, // 上传数据组id
+  sceneid: -1, // 场景id
+  userid: 0,  // userid
 })
 
 // getters
@@ -39,6 +40,9 @@ const getters = {
   },
   sceneid(state: userState) {
     return state.sceneid
+  },
+  userid(state: userState) {
+    return state.userid
   }
 }
 
@@ -56,6 +60,9 @@ const mutations = {
   sceneidChange(state: userState, sceneid: bigint) {
     state.sceneid = sceneid
   },
+  useridChange(state: userState, userid: bigint) {
+    state.userid = userid
+  },
 }
 
 // actions
@@ -68,6 +75,7 @@ const actions = {
         commit('tokenChange', res.data.token)
         commit('groupidChange', -1)
         commit('sceneidChange', -1)
+        commit('useridChange', res.data.id)
         dispatch('getInfo', { token: res.data.token })
         .then(infoRes => {
           resolve(res.data.token)

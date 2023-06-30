@@ -89,3 +89,11 @@ export function updateUser(data) {
     })
 }
 
+export function getAuthCode(data){
+    return request({
+        url: '/email' + data,
+        method: 'get',
+        // baseURL: '/mock',
+    })
+}
+

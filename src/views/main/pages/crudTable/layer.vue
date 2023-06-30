@@ -1,9 +1,16 @@
 <template>
   <Layer :layer="layer" @confirm="submit" ref="layerDom">
-    <el-form  :model="form" :rules="rules" ref="ruleForm" label-width="120px" style="margin-right:30px;">
-      <el-form-item  v-for="column in columns" :key="column.prop" :label="column.label" :prop="column.prop" >
-        <el-input  v-model="form[column.prop]" placeholder="请输入相应数值"></el-input>
-      </el-form-item>
+    <el-form  :model="form" :rules="rules" ref="ruleForm" label-width="200px" style="margin-right:30px;">
+      <el-row>
+        <el-col :span="12"  v-for="column in columns" :key="column.prop">
+          <el-form-item :label="column.label" :prop="column.prop" >
+            <el-input  v-model="form[column.prop]" placeholder="请输入相应数值"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+<!--        <el-form-item  v-for="column in columns" :key="column.prop" :label="column.label" :prop="column.prop" >-->
+<!--          <el-input  v-model="form[column.prop]" placeholder="请输入相应数值"></el-input>-->
+<!--        </el-form-item>-->
 
     </el-form>
   </Layer>
@@ -112,8 +119,10 @@ export default defineComponent({
               let valueList = nameList.map(name => this.form[name]);
 
               let params = {
-                dataid: this.layer.row ? this.layer.row.id : '',
+                dataid: this.layer.row ? Number( this.layer.row.id) : -1,
                 sceneid: store.state.user.sceneid,
+                groupid: store.state.user.groupid,
+                userid: store.state.user.userid,
                 fieldnames: nameList,
                 fieldvalues: valueList.map(value => parseFloat(value))
               }

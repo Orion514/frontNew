@@ -82,9 +82,6 @@ export default {
       onSuccess(){
         ElMessage.success("上传成功")
       },
-      onError(){
-        ElMessage.error("上传失败")
-      },
       uploadFile(file){
         ElMessage.info("开始上传")
         const url = '/indexTree'
@@ -93,7 +90,9 @@ export default {
         formData.append('userid',this.userid)
 
         uplaodIndexTree(formData,url).then(response => {
+          console.log(response)
           const code = response.code;
+          console.log(code)
           if(code === 200){
             ElMessage.success("上传成功");
             // 刷新表格
@@ -103,10 +102,6 @@ export default {
           }
         }).catch(error => {
           console.log(error)
-          this.$message({
-            message: '上传失败',
-            type: 'error'
-          });
         })
       }
     }

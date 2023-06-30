@@ -33,7 +33,7 @@ const router = createRouter({
 })
 
 // 未授权时可访问的白名单
-const whiteList = ['/login','/register']
+const whiteList = ['/login','/register','/findPswd']
 
 // 路由跳转前的监听操作
 router.beforeEach((to, _from, next) => {

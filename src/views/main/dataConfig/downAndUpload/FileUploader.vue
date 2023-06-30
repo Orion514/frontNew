@@ -105,9 +105,6 @@ export default {
       onSuccess(){
         ElMessage.success("上传成功")
       },
-      onError(){
-        ElMessage.error("上传失败")
-      },
       uploadFile(file){
         ElMessage.info("开始上传")
         const url = this.getUploadAction(this.fileType)
@@ -127,10 +124,6 @@ export default {
           }
         }).catch(error => {
           console.log(error)
-          this.$message({
-            message: '上传失败',
-            type: 'error'
-          });
         })
       }
     }

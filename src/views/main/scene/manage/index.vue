@@ -126,9 +126,9 @@ export default defineComponent({
     const value = ref('')
     const scenes = ref([])
     const store = useStore()
-    if(store.state.user.sceneid == -1){
-      store.commit('user/sceneidChange',1)
-    }
+    // if(store.state.user.sceneid == -1){
+    //   store.commit('user/sceneidChange',1)
+    // }
     const options = ref({})
     const option2 = ref({})
 
@@ -171,6 +171,11 @@ export default defineComponent({
         }
         const res = await getIndexTree(params);
         scenes.value = res.data;
+        if(res.data.length > 0){
+          value.value = res.data[0].value,
+          store.commit('user/sceneidChange', Number( value.value ))
+          fetchData()
+        }
       }catch (error){
         console.log(error)
         ElMessage.error(error);
@@ -216,8 +221,6 @@ export default defineComponent({
       }
     };
     getIndexTrees()
-    fetchData()
-
 
     function flattenTree(obj) {
       const result = [];

@@ -45,9 +45,10 @@
 <!--          todo, add 邮箱和布局-->
           <el-row :gutter="20">
             <el-col :span="10"><div class="grid-content ep-bg-purple" /><el-button type="primary"  @click="submit" style="width: 100%;" size="medium">{{ $t('message.system.login') }}</el-button></el-col>
-            <el-col :span="14"><div class="grid-content ep-bg-purple" /><el-button type="primary"  @click="submit" style="width: 100%;" size="medium">{{ $t('message.system.findPsd') }}</el-button></el-col>
-            <el-col :span="10"></el-col>
-            <el-button style="width: 48%" @click="doRegister" >注册 </el-button>
+            <el-col :span="14"><div class="grid-content ep-bg-purple" /><el-button style="width: 100%" size="medium" @click="doRegister" >注册 </el-button></el-col>
+<!--            <el-col :span="10"></el-col>-->
+            <el-button type="info"  @click="doFind" style="width: 50%; margin: 0 auto; margin-top:10px"  size="medium">{{ $t('message.system.findPsd') }}</el-button>
+
           </el-row>
 
         </el-form>
@@ -92,6 +93,11 @@ export default defineComponent({
     const doRegister = () => {
       console.log('doRegister')
       router.push('/register')
+    }
+
+    const doFind = () =>{
+      console.log('doFind')
+      router.push('/findPswd')
     }
 
     const checkForm = () => {
@@ -145,7 +151,8 @@ export default defineComponent({
       passwordType,
       passwordTypeChange,
       submit,
-      doRegister
+      doRegister,
+      doFind
     }
   }
 })
