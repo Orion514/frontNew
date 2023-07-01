@@ -4,7 +4,7 @@ import request from "@/utils/system/request";
 // 获得树的结构
 export function getTreeChartData(data){
     return request({
-        url: "/result/TreeSceneDisplay",
+        url: "/result/tree/sceneDisplay",
         method: 'get',
         // baseURL: '/mock',
         params: data

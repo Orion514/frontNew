@@ -34,7 +34,7 @@ export function passwordChange(data: object) {
   return request({
     url: '/user/passwordChange',
     method: 'post',
-    baseURL: '/mock',
+    // baseURL: '/mock',
     data
   })
 }
@@ -91,9 +91,16 @@ export function updateUser(data) {
 
 export function getAuthCode(data){
     return request({
-        url: '/email' + data,
+        url: '/email/' + data,
         method: 'get',
         // baseURL: '/mock',
     })
 }
 
+export const changeUserPwd = (data) => {
+  return request({
+    url: '/user/changeUserPwd',
+    method: 'put',
+    data
+  })
+}

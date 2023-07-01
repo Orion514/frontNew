@@ -4,7 +4,7 @@ import request from '@/utils/system/request'
 // 获取树结构api(不含叶子节点)
 export function getTree(data) {
     return request({
-        url: '/result/tree',
+        url: '/result/tree/getStructureNoLeaves',
         method: 'get',
         // baseURL: '/mock',
         params: data

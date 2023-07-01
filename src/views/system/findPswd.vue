@@ -39,7 +39,7 @@
             <i class="sfont system-xingmingyonghumingnicheng"></i>
           </template>
           <template #append>
-            <el-button type="primary" @click="getCode" size="medium" >获取验证码</el-button>
+            <el-button type="primary" :disabled='btnBoolean' @click="handleSendAuthCode" size="medium" >{{sendEmailBtn}}</el-button>
           </template>
         </el-input>
 
@@ -63,7 +63,7 @@
         <el-input
             size="large"
             ref="password"
-            v-model="form.password"
+            v-model="form.passwordCheck"
             :type="passwordType"
             placeholder="密码"
             name="password"
@@ -78,7 +78,7 @@
         </el-input>
 
 
-        <el-button type="primary" @click="handleRegister" style="width:100%;" size="medium" >确定</el-button>
+        <el-button type="primary" @click="handleSubmit" style="width:100%;" size="medium" >确定</el-button>
         <router-link style='margin-top: 10px ; float: right ;color: #666666' to='/login' >前往登录</router-link>
       </el-form>
     </div>
@@ -87,7 +87,7 @@
 
 <script >
 import {defineComponent, reactive, ref} from 'vue'
-import {getAuthCode, register} from '@/api/user'
+import {changeUserPwd, getAuthCode, register} from '@/api/user'
 import { ElMessage } from 'element-plus'
 import {useStore} from "vuex";
 import {useRoute, useRouter} from "vue-router";
@@ -99,11 +99,16 @@ export default defineComponent({
     const router = useRouter()
     const route = useRoute()
     const form = reactive({
-      name: '',
       password: '',
       email: '',
-      code: ''
+      code: '',
+      passwordCheck:''
     })
+    let btnBoolean = false;
+    let countDown = null;
+    let EmailTimer = null;
+    const sendEmailBtn = ref('获取验证码')
+
 
     const passwordType = ref('password')
     const passwordTypeChange = () => {
@@ -111,14 +116,7 @@ export default defineComponent({
     }
     const checkForm = () => {
       return new Promise((resolve, reject) => {
-        if (form.name === '') {
-          ElMessage.warning({
-            message: '用户名不能为空',
-            type: 'warning'
-          });
-          return;
-        }
-        if (form.password === '') {
+        if (form.password === '' || form.passwordCheck === '') {
           ElMessage.warning({
             message: '密码不能为空',
             type: 'warning'
@@ -134,6 +132,15 @@ export default defineComponent({
           return;
         }
 
+        if (form.password !== form.passwordCheck) {
+          ElMessage.warning({
+            message: '两次密码不一致',
+            type: 'warning'
+          })
+          return;
+        }
+
+
         resolve(true)
       })
     }
@@ -144,17 +151,9 @@ export default defineComponent({
         return false
       }
       return mailReg.test(value)
-      setTimeout(() => {
-        if (mailReg.test(value)) {
-          return true
-        } else {
-          return false
-        }
-      }, 100)
-
     }
 
-    const getCode = () => {
+    const handleSendAuthCode = () => {
       if (form.email === '') {
         ElMessage.warning({
           message: '邮箱不能为空',
@@ -169,54 +168,64 @@ export default defineComponent({
         })
         return;
       }
-      let params = {
-        email: form.email
-      }
-      ElMessage.success('发送')
-      // getAuthCode(params)
-      ElMessage.success('发送')
-      getAuthCode(params)
+      getAuthCode(form.email)
           .then(res => {
-            if (res.code === 200) {
-              ElMessage.success({
-                message: '验证码已发送',
-                type: 'success',
-                showClose: true,
-                duration: 1000
-              })
+            countDown = 60
+            console.log(res)
+            if(res.code !== 200){
+              ElMessage.error(res.msg)
+              return
             }
+            ElMessage.success('发送成功请注意查收')
+            btnBoolean = true
+            sendEmailBtn.value = '重新获取(' + countDown + ')'
+            EmailTimer = setInterval(() => {
+              console.log(countDown)
+              if (countDown === 1) {
+                clearInterval(EmailTimer)
+                sendEmailBtn.value = '重新获取'
+                btnBoolean = false
+                return
+              }
+              countDown--
+              sendEmailBtn.value = '重新获取(' + countDown + ')'
+            }, 1000)
           })
-
     }
 
-    const handleRegister = () => {
+    const handleSubmit = () => {
       checkForm()
           .then(() => {
             let params = {
-              name: form.name,
               password: md5(form.password),
               email: form.email,
-              code: form.code,
+              emailAuthCode: form.code,
             }
-            register(params)
-                .then(res => {
-                  if (res.code === 200) {
-                    ElMessage.success({
-                      message: '注册成功',
-                      type: 'success',
-                      showClose: true,
-                      duration: 1000
-                    })
-                  }
+            changeUserPwd(params).then(res => {
+              if (res.code === 200) {
+                ElMessage.success({
+                  message: '密码修改成功，即将跳转到登录页面',
+                  type: 'success',
+                  showClose: true,
+                  duration: 1000
                 })
+                setTimeout(() => {
+                  store.dispatch('user/loginOut')
+                }, 2000)
+              }
+            })
           })
     }
     return {
       form,
       passwordType,
+      btnBoolean,
+      countDown,
+      EmailTimer,
+      sendEmailBtn,
       passwordTypeChange,
-      handleRegister,
-      getCode
+      handleSendAuthCode,
+      handleSubmit,
     }
   }
 })
